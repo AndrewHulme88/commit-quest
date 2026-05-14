@@ -12,6 +12,15 @@ export default function Home() {
         {session ? (
           <div className="text-center">
             <p className="mb-4">Signed in as {session.user?.name}</p>
+            {session.user?.image && (
+              <img
+                src={session.user.image}
+                // alt={session.user.name}
+                className="mx-auto rounded-full"
+                width={100}
+                height={100}
+              />
+            )}
             <button
               onClick={() => signOut()}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
