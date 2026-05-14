@@ -11,7 +11,7 @@ export default function Home() {
         <h2 className="text-2xl font-bold mb-4">Welcome to GitHub Login</h2>
         {session ? (
           <div className="text-center">
-            <p className="mb-4">Signed in as {session.user?.email}</p>
+            <p className="mb-4">Signed in as {session.user?.name}</p>
             <button
               onClick={() => signOut()}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
