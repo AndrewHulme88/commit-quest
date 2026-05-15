@@ -10,6 +10,19 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    async jwt({ token, account }) {
+      if (account?.access_token) {
+        token.githubAccessToken = account.access_token;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.githubAccessToken = token.githubAccessToken;
+      return session;
+    },
+
     async signIn({ user, account }) {
       if (!account?.providerAccountId) return false;
 
