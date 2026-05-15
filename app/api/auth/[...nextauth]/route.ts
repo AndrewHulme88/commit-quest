@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@/lib/prisma';
 
+// Handles authentication using NextAuth with GitHub as the provider
 const handler = NextAuth({
   providers: [
     GitHubProvider({
@@ -10,6 +11,7 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    // Runs whenever a JWT token is created or updated
     async jwt({ token, account }) {
       if (account?.access_token) {
         token.githubAccessToken = account.access_token;
@@ -18,11 +20,13 @@ const handler = NextAuth({
       return token;
     },
 
+    // Runs whenever a session is checked. It adds the GitHub access token to the session object
     async session({ session, token }) {
       session.githubAccessToken = token.githubAccessToken;
       return session;
     },
 
+    // Runs whenever a user signs in. It upserts the user in the database based on their GitHub ID
     async signIn({ user, account }) {
       if (!account?.providerAccountId) return false;
 
