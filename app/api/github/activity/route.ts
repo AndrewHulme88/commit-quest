@@ -39,20 +39,20 @@ export async function GET(req: NextRequest) {
         (event: any) => event.type === "PushEvent"
     );
 
-    // const commitCounter = pushEvents.reduce(
-    //     (total: number, event: any) => {
-    //         const commits = event.payload?.commits ?? [];
-    //         return total + commits.length;
-    //     },
-    //     0
-    // );
+    const commitCounter = pushEvents.reduce(
+        (total: number, event: any) => {
+            const commits = event.payload?.commits ?? [];
+            return total + commits.length;
+        },
+        0
+    );
 
     const xp = pushEvents.length * 10;
 
     console.log(pushEvents[0]);
 
     return NextResponse.json({
-        //commits: commitCounter,
+        commits: commitCounter,
         xp,
         pushEvents: pushEvents.length,
     });
