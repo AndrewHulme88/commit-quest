@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
 
     const events = await eventsResponse.json();
 
+    // Filter for push events and calculate XP based on the number of push events
     const pushEvents = events.filter(
         (event: any) => event.type === "PushEvent"
     );

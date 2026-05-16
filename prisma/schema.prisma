@@ -18,6 +18,11 @@ model User {
   name      String?
   email     String?
   image     String?
+
+  xp        Int       @default(0)
+  level     Int       @default(1)
+  lastSync  DateTime?
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
