@@ -35,17 +35,19 @@ export async function GET(req: NextRequest) {
 
     const events = await eventsResponse.json();
 
-    // Filter for push events and calculate XP based on the number of push events
+    // Filter for push events
     const pushEvents = events.filter(
         (event: any) => event.type === "PushEvent"
     );
 
-    const xp = pushEvents.length * 10;
-
-    console.log(pushEvents[0]);
+    // Calculate XP and level based on the number of push events
+    const pushEventCount = pushEvents.length;
+    const xp = pushEventCount * 10;
+    const level = Math.floor(xp / 100) + 1;
 
     return NextResponse.json({
         xp,
+        level,
         pushEvents: pushEvents.length,
     });
 }

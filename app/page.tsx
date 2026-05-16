@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { SyncActivityButton } from "../components/SyncActivityButton";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -39,6 +40,7 @@ export default function Home() {
             </button>
           </div>
         )}
+        {session && <SyncActivityButton />}
       </section>
     </div>
   );
