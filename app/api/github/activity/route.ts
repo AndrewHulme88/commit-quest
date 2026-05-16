@@ -35,5 +35,25 @@ export async function GET(req: NextRequest) {
 
     const events = await eventsResponse.json();
 
-    return NextResponse.json(events);
+    const pushEvents = events.filter(
+        (event: any) => event.type === "PushEvent"
+    );
+
+    // const commitCounter = pushEvents.reduce(
+    //     (total: number, event: any) => {
+    //         const commits = event.payload?.commits ?? [];
+    //         return total + commits.length;
+    //     },
+    //     0
+    // );
+
+    const xp = pushEvents.length * 10;
+
+    console.log(pushEvents[0]);
+
+    return NextResponse.json({
+        //commits: commitCounter,
+        xp,
+        pushEvents: pushEvents.length,
+    });
 }
