@@ -30,7 +30,7 @@ export function SyncActivityButton() {
             </button>
 
             {result && (
-                <p>{result.pushEvents} push events found - {result.xp} XP earned Test</p>
+                <p>{result.pushEvents} push events found - {result.xp} XP earned</p>
             )}
         </div>
     );
