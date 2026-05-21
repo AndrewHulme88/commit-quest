@@ -7,6 +7,7 @@ export function SyncActivityButton() {
     const [result, setResult] = useState<null | {
         pushEvents: number;
         xp: number;
+        level: number;
     }>(null);
 
     async function handleSync() {
@@ -30,7 +31,7 @@ export function SyncActivityButton() {
             </button>
 
             {result && (
-                <p>{result.pushEvents} push events found - {result.xp} XP earned</p>
+                <p>{result.pushEvents} push events found - {result.xp} XP earned - Level: {result.level}</p>
             )}
         </div>
     );
