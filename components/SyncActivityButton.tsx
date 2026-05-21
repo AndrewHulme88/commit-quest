@@ -6,7 +6,9 @@ export function SyncActivityButton() {
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<null | {
         pushEvents: number;
+        newPushEvents: number;
         xp: number;
+        totalXp: number;
         level: number;
     }>(null);
 
@@ -31,7 +33,7 @@ export function SyncActivityButton() {
             </button>
 
             {result && (
-                <p>{result.pushEvents} push events found - {result.xp} XP earned - Level: {result.level}</p>
+                <p>{result.pushEvents} push events found - {result.newPushEvents} new - {result.xp} XP earned - Total XP: {result.totalXp} - Level: {result.level}</p>
             )}
         </div>
     );
