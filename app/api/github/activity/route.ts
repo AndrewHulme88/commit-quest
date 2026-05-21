@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 // This route fetches the authenticated user's GitHub activity using their access token
 export async function GET(req: NextRequest) {
@@ -45,9 +46,24 @@ export async function GET(req: NextRequest) {
     const xp = pushEventCount * 10;
     const level = Math.floor(xp / 100) + 1;
 
+    const githubId = token.sub;
+
+    const updatedUser = await prisma.user.update({
+        where: {
+            githubId,
+        },
+        data: {
+            xp: {
+                increment: xp,
+            },
+            lastSync: new Date(),
+        },
+    });
+
     return NextResponse.json({
+        pushEvents: pushEventCount,
         xp,
-        level,
-        pushEvents: pushEvents.length,
+        totalXp: updatedUser.xp,
+        level: updatedUser.level,
     });
 }

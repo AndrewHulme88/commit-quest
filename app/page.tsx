@@ -16,7 +16,6 @@ export default function Home() {
             {session.user?.image && (
               <img
                 src={session.user.image}
-                // alt={session.user.name}
                 className="mx-auto rounded-full"
                 width={100}
                 height={100}
