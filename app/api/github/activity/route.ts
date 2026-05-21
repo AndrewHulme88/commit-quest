@@ -43,15 +43,43 @@ export async function GET(req: NextRequest) {
 
     // Calculate XP and level based on the number of push events
     const pushEventCount = pushEvents.length;
-    const xp = pushEventCount * 10;
 
     const githubId = token.sub;
 
+    const user = await prisma.user.findUnique({
+        where: { githubId },
+    });
+
+    if (!user) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const newPushEvents = [];
+
+    for (const event of pushEvents) {
+        const existingEvent = await prisma.githubEvent.findUnique({
+            where: { id: event.id },
+        });
+
+        if (!existingEvent) {
+            newPushEvents.push(event);
+        }
+    }
+
+    const xp = newPushEvents.length * 10;
+
+    await prisma.githubEvent.createMany({
+        data: newPushEvents.map((event: any) => ({
+            id: event.id,
+            userId: user.id,
+            type: event.type,
+            xpAwarded: 10,
+        })),
+    });
+
     // Update the user's XP and last sync time in the database
     const updatedUser = await prisma.user.update({
-        where: {
-            githubId,
-        },
+        where: { githubId},
         data: {
             xp: {
                 increment: xp,
@@ -74,7 +102,8 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({
-        pushEvents: pushEventCount,
+        pushEvents: pushEvents.length,
+        newPushEvents: newPushEvents.length,
         xp,
         totalXp: updatedUser.xp,
         level: finalUser.level,

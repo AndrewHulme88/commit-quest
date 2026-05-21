@@ -22,13 +22,13 @@ model User {
   level     Int       @default(1)
   lastSync  DateTime?
 
-  githubEvents  GIthubEvent[]
+  githubEvents  GithubEvent[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
-model GIthubEvent {
+model GithubEvent {
   id        String    @id
   userId    String
   type      String
