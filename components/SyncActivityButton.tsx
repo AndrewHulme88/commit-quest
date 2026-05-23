@@ -2,15 +2,20 @@
 
 import { useState } from "react";
 
-export function SyncActivityButton() {
+type SyncResult = {
+    pushEvents: number;
+    newPushEvents: number;
+    xp: number;
+    totalXp: number;
+    level: number;
+};
+
+type Props = {
+    onSyncComplete: (result: SyncResult) => void;
+};
+
+export function SyncActivityButton({ onSyncComplete }: Props) {
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState<null | {
-        pushEvents: number;
-        newPushEvents: number;
-        xp: number;
-        totalXp: number;
-        level: number;
-    }>(null);
 
     async function handleSync() {
         setLoading(true);
@@ -18,7 +23,7 @@ export function SyncActivityButton() {
         const response = await fetch("/api/github/activity");
         const data = await response.json();
 
-        setResult(data);
+        onSyncComplete(data);
         setLoading(false);
     }
 
@@ -31,10 +36,6 @@ export function SyncActivityButton() {
             >
                 {loading ? "Syncing..." : "Sync GitHub Activity"}
             </button>
-
-            {result && (
-                <p>{result.pushEvents} push events found - {result.newPushEvents} new - {result.xp} XP earned - Total XP: {result.totalXp} - Level: {result.level}</p>
-            )}
         </div>
     );
 }

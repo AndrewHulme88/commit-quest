@@ -1,13 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { SyncActivityButton } from "./SyncActivityButton";
+
+type SyncResult = {
+    pushEvents: number;
+    newPushEvents: number;
+    xp: number;
+    totalXp: number;
+    level: number;
+};
 
 export function Dashboard() {
     const { data: session } = useSession();
 
     if (!session?.user) return null;
+
+    const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+
+    const totalXp = syncResult?.totalXp ?? 0;
+    const level = syncResult?.level ?? 1;
 
     return (
         <main className="min-h-screen bg-zinc-950 px-6 py-10 text-white">
@@ -36,12 +50,12 @@ export function Dashboard() {
                 <section className="grid gap-6 md:grid-cols-3">
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Level</p>
-                        <p className="text-4xl font-bold">1</p>
+                        <p className="text-4xl font-bold">{level}</p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Total XP</p>
-                        <p className="text-4xl font-bold">0</p>
+                        <p className="text-4xl font-bold">{totalXp}</p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
@@ -52,7 +66,7 @@ export function Dashboard() {
 
                 <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                     <h2 className="mb-4 text-xl font-semibold">Sync Your GitHub Activity</h2>
-                    <SyncActivityButton />
+                    <SyncActivityButton onSyncComplete={setSyncResult}/>
                 </section>
 
                 <button
