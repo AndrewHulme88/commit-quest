@@ -4,11 +4,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { SyncActivityButton } from "./SyncActivityButton";
+import { useEffect } from "react";
 
-type SyncResult = {
-    pushEvents: number;
-    newPushEvents: number;
-    xp: number;
+// type SyncResult = {
+//     pushEvents: number;
+//     newPushEvents: number;
+//     xp: number;
+//     totalXp: number;
+//     level: number;
+// };
+
+type UserStats = {
     totalXp: number;
     level: number;
 };
@@ -18,10 +24,25 @@ export function Dashboard() {
 
     if (!session?.user) return null;
 
-    const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+    const [userStats, setUserStats] = useState<UserStats>({
+        totalXp: 0,
+        level: 1,
+    });
 
-    const totalXp = syncResult?.totalXp ?? 0;
-    const level = syncResult?.level ?? 1;
+    useEffect(() => {
+        async function loadUserStats() {
+            const response = await fetch("/api/user/stats");
+            const data = await response.json();
+            setUserStats(data);
+        }
+        
+        loadUserStats();
+    }, []);
+
+    // const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+
+    // const totalXp = syncResult?.totalXp ?? 0;
+    // const level = syncResult?.level ?? 1;
 
     return (
         <main className="min-h-screen bg-zinc-950 px-6 py-10 text-white">
@@ -50,12 +71,12 @@ export function Dashboard() {
                 <section className="grid gap-6 md:grid-cols-3">
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Level</p>
-                        <p className="text-4xl font-bold">{level}</p>
+                        <p className="text-4xl font-bold">{userStats.level}</p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Total XP</p>
-                        <p className="text-4xl font-bold">{totalXp}</p>
+                        <p className="text-4xl font-bold">{userStats.totalXp}</p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
@@ -66,7 +87,7 @@ export function Dashboard() {
 
                 <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                     <h2 className="mb-4 text-xl font-semibold">Sync Your GitHub Activity</h2>
-                    <SyncActivityButton onSyncComplete={setSyncResult}/>
+                    {/* <SyncActivityButton onSyncComplete={setSyncResult}/> */}
                 </section>
 
                 <button
