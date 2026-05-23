@@ -3,16 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { SyncActivityButton } from "./SyncActivityButton";
 import { useEffect } from "react";
 
-// type SyncResult = {
-//     pushEvents: number;
-//     newPushEvents: number;
-//     xp: number;
-//     totalXp: number;
-//     level: number;
-// };
+type SyncResult = {
+    pushEvents: number;
+    newPushEvents: number;
+    xp: number;
+    totalXp: number;
+    level: number;
+};
 
 type UserStats = {
     totalXp: number;
@@ -29,20 +28,35 @@ export function Dashboard() {
         level: 1,
     });
 
+    const [syncing, setSyncing] = useState(false);
+    const [lastSync, setLastSync] = useState<SyncResult | null>(null);
+
     useEffect(() => {
-        async function loadUserStats() {
-            const response = await fetch("/api/user/stats");
-            const data = await response.json();
-            setUserStats(data);
+        async function loadDashboard() {
+            const statsResponse = await fetch("/api/user/stats");
+            const savedStats = await statsResponse.json();
+            
+            setUserStats({
+                totalXp: savedStats.totalXp,
+                level: savedStats.level,
+            });
+
+            setSyncing(true);
+
+            const syncResponse = await fetch("/api/github/activity");
+            const syncResult = await syncResponse.json();
+
+            setUserStats({
+                totalXp: syncResult.totalXp,
+                level: syncResult.level,
+            });
+
+            setSyncing(false);
+            setLastSync(syncResult);
         }
         
-        loadUserStats();
+        loadDashboard();
     }, []);
-
-    // const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
-
-    // const totalXp = syncResult?.totalXp ?? 0;
-    // const level = syncResult?.level ?? 1;
 
     return (
         <main className="min-h-screen bg-zinc-950 px-6 py-10 text-white">
@@ -86,8 +100,12 @@ export function Dashboard() {
                 </section>
 
                 <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-                    <h2 className="mb-4 text-xl font-semibold">Sync Your GitHub Activity</h2>
-                    {/* <SyncActivityButton onSyncComplete={setSyncResult}/> */}
+                    {syncing && <p className="text-sm text-zinc-400">Syncing with GitHub...</p>}
+                    {lastSync && lastSync.xp > 0 && (
+                        <p className="text-sm text-green-400">
+                            +{lastSync.xp} XP from {lastSync.newPushEvents} new commits!
+                        </p>
+                    )}
                 </section>
 
                 <button
