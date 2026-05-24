@@ -77,6 +77,33 @@ export async function GET(req: NextRequest) {
         })),
     });
 
+    // Calculate the user's current streak
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let streak = user.streak;
+
+    if (newPushEvents.length > 0) {
+        const lastActivityDate = user.lastActivityDate ? new Date(user.lastActivityDate) : null;
+
+        if (!lastActivityDate) {
+            streak = 1;
+        } else {
+            lastActivityDate.setHours(0, 0, 0, 0);
+
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+
+            if (lastActivityDate.getTime() === yesterday.getTime()) {
+                streak += 1;
+            } else if (lastActivityDate.getTime() === today.getTime()) {
+                streak = user.streak; // No change to streak if they already had activity today
+            } else {
+                streak = 1; // Reset streak if they missed a day
+            }
+        }
+    }
+
     // Update the user's XP and last sync time in the database
     const updatedUser = await prisma.user.update({
         where: { githubId},
