@@ -23,8 +23,6 @@ type UserStats = {
 export function Dashboard() {
     const { data: session } = useSession();
 
-    if (!session?.user) return null;
-
     const [userStats, setUserStats] = useState<UserStats>({
         totalXp: 0,
         level: 1,
@@ -63,8 +61,23 @@ export function Dashboard() {
         loadDashboard();
     }, []);
 
+    if (!session?.user) return null;
+
     return (
-        <main className="min-h-screen bg-zinc-950 px-6 py-10 text-white">
+        <main className="min-h-screen bg-zinc-950 text-white">
+            <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
+                <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+                    <h1 className="text-xl font-bold">Commit Quest</h1>
+        
+                    <button
+                    onClick={() => signOut()}
+                    className="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                    >
+                    Sign out
+                    </button>
+                </div>
+            </nav>
+
             <div className="mx-auto max-w-4xl space-y-6">
                 <section className="rounded-2xl border-zinc-800 bg-zinc-900 p-6 shadow-lg">
                     <div className="flex items-center gap-4">
