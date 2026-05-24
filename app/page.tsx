@@ -35,6 +35,35 @@ export default function Home() {
         <h2 className="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-6xl">
           Turn your GitHub commits into XP and level up as a developer.
         </h2>
+
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
+          Commit Quest rewards your GitHub activity with game-like progression, 
+          helping you stay motivated while you build.
+        </p>
+
+        <button
+          onClick={() => signIn("github")}
+          className="mt-10 rounded-xl bg-emerald-500 px-6 py-4 font-bold text-zinc-950 shadow-lg shados-emerald-500/20 hover:bg-emerald-400"
+          >
+            Start your quest
+          </button>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 md:grid-cols-3">
+        <div className="rounded-2-xl border border-zinc-800 bg-zinc-900 p-6">
+          <p className="text-3xl font-bold">XP</p>
+          <p className="mt-3 text-zinc-400">Earn experience points for your GitHub commits</p>
+        </div>
+
+        <div className="rounded-2-xl border border-zinc-800 bg-zinc-900 p-6">
+          <p className="text-3xl font-bold">Levels</p>
+          <p className="mt-3 text-zinc-400">Watch your developer profile grow as you build and level up</p>
+        </div>
+
+        <div className="rounded-2-xl border border-zinc-800 bg-zinc-900 p-6">
+          <p className="text-3xl font-bold">Streaks</p>
+          <p className="mt-3 text-zinc-400">Stay motivated with daily commit streaks</p>
+        </div>
       </section>
     </main>
   );
