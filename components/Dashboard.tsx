@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { getXpForNextLevel } from "@/lib/xp";
 
 type SyncResult = {
     pushEvents: number;
@@ -62,6 +63,12 @@ export function Dashboard() {
     }, []);
 
     if (!session?.user) return null;
+
+    const currentLevelStartXp = getXpForNextLevel(userStats.level - 1);
+    const nextLevelXp = getXpForNextLevel(userStats.level);
+    const currentLevelXp = userStats.totalXp - currentLevelStartXp;
+    const xpNeededForNextLevel = nextLevelXp - currentLevelStartXp;
+    const progressPercent = Math.min((currentLevelXp / xpNeededForNextLevel) * 100, 100);
 
     return (
         <main className="min-h-screen bg-zinc-950 text-white">
@@ -137,13 +144,15 @@ export function Dashboard() {
                 <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                     <div className="mb-3 flex items-center justify-between">
                         <p className="font-semibold">Level Progress</p>
-
+                        <p className="text-sm text-zinc-400">
+                            {currentLevelXp} / {xpNeededForNextLevel} XP to next level
+                        </p>
                     </div>
 
                     <div className="h-4 overflow-hidden rounded-full bg-zinc-800">
                         <div
                             className="h-full rounded-full bg-emerald-500 transition-all"
-                            style={{}}
+                            style={{ width: `${progressPercent}%` }}
                         />
                     </div>
                 </section>

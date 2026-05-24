@@ -1,6 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { calculateLevel }  from "@/lib/xp";
 
 // This route fetches the authenticated user's GitHub activity using their access token
 export async function GET(req: NextRequest) {
@@ -115,8 +116,9 @@ export async function GET(req: NextRequest) {
         },
     });
 
+
     // Calculate the user's level based on their total XP
-    const level = Math.floor(updatedUser.xp / 100) + 1;
+    const level = calculateLevel(updatedUser.xp);
 
     // Update the user's level in the database
     const finalUser = await prisma.user.update({
