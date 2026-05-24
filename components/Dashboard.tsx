@@ -78,61 +78,96 @@ export function Dashboard() {
                 </div>
             </nav>
 
-            <div className="mx-auto max-w-4xl space-y-6">
-                <section className="rounded-2xl border-zinc-800 bg-zinc-900 p-6 shadow-lg">
-                    <div className="flex items-center gap-4">
-                        {session.user.image && (
-                            <Image
-                                src={session.user.image}
-                                alt={session.user.name ?? "User Avatar"}
-                                width={72}
-                                height={72}
-                                className="rounded-full"
-                            />
-                        )}
+            <div className="mx-auto max-w-6xl px-6 py-10">
+                <section className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 shadow-xl">
+                    <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-5">
+                            {session.user.image && (
+                                <Image
+                                    src={session.user.image}
+                                    alt={session.user.name ?? "User Avatar"}
+                                    width={72}
+                                    height={72}
+                                    className="rounded-full"
+                                />
+                            )}
 
-                        <div>
-                            <h1 className="text-3xl font-bold">
-                                Welcome, {session.user.name}!
-                            </h1>
-                            <p className="text-zinc-400">Ready to earn some XP?</p>
+                            <div>
+                                <p className="mb-2 text-sm font-medium text-emerald-400">
+                                    Developer Dashboard
+                                </p>
+                                <h2 className="text-3xl font-bold">
+                                    Welcome, {session.user.name}!
+                                </h2>
+                                <p className="text-zinc-400">
+                                    Track your progress
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
+                            <p className="text-sm text-emerald-300">Current Level</p>
+                            <p className="text-5xl font-black text-emerald-400">{userStats.level}</p>
                         </div>
                     </div>
                 </section>
 
-                <section className="grid gap-6 md:grid-cols-3">
-                    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-                        <p className="text-sm text-zinc-400">Level</p>
-                        <p className="text-4xl font-bold">{userStats.level}</p>
-                    </div>
-
+                <section className="mt-6 grid gap-6 md:grid-cols-3">
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Total XP</p>
-                        <p className="text-4xl font-bold">{userStats.totalXp}</p>
+                        <p className="mt-2 text-4xl font-bold">{userStats.totalXp}</p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-                        <p className="text-sm text-zinc-400">Streak</p>
-                        <p className="text-4xl font-bold">{userStats.streak} Days</p>
+                        <p className="text-sm text-zinc-400">Daily Streak</p>
+                        <p className="mt-2 text-4xl font-bold">{userStats.streak} Days</p>
+                        <p className="mt-2 text-sm text-zinc-500">
+                            Keep your streak alive by committing every day!
+                        </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                        <p className="text-sm text-zinc-400">Sync Status</p>
+                        <p className="mt-2 text-2xl font-bold">
+                            {syncing ? "Checking..." : "Up to date"}
+                        </p>
                     </div>
                 </section>
 
-                <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-                    {syncing && <p className="text-sm text-zinc-400">Syncing with GitHub...</p>}
-                    {lastSync && lastSync.xp > 0 && (
-                        <p className="text-sm text-green-400">
+                <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                    <div className="mb-3 flex items-center justify-between">
+                        <p className="font-semibold">Level Progress</p>
+
+                    </div>
+
+                    <div className="h-4 overflow-hidden rounded-full bg-zinc-800">
+                        <div
+                            className="h-full rounded-full bg-emerald-500 transition-all"
+                            style={{}}
+                        />
+                    </div>
+                </section>
+
+                <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                    <h3 className="text-xl font-bold">Latest Sync</h3>
+                    {syncing && (<p className="text-sm text-zinc-400">Syncing with GitHub...</p>)}
+                    {!syncing && lastSync && lastSync.xp > 0 && (
+                        <p className="text-sm text-emerald-400">
                             +{lastSync.xp} XP from {lastSync.newPushEvents} new commits!
                         </p>
                     )}
+                    {!syncing && lastSync && lastSync.xp === 0 && (
+                        <p className="text-sm text-zinc-400">
+                            No new commits since your last sync. Keep building to earn XP!
+                        </p>
+                    )}
                 </section>
-
-                <button
-                    onClick={() => signOut()}
-                    className="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-                >
-                    Sign Out
-                </button>
             </div>
+
+            <footer className="border-t border-zinc-800 px-6 py-8 text-center text-sm text-zinc-500">
+                Built for developers who want progress to feel rewarding.
+                &copy; {new Date().getFullYear()} Commit Quest. All rights reserved.
+            </footer>
         </main>
     );
 }
