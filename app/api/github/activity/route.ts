@@ -125,6 +125,9 @@ export async function GET(req: NextRequest) {
         },
         data: {
             level,
+            streak,
+            lastActivityDate: newPushEvents.length > 0 ? new Date() : user.lastActivityDate,
+            lastSync: new Date(),
         },
     });
 
@@ -134,5 +137,6 @@ export async function GET(req: NextRequest) {
         xp,
         totalXp: updatedUser.xp,
         level: finalUser.level,
+        streak: finalUser.streak,
     });
 }

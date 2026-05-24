@@ -11,11 +11,13 @@ type SyncResult = {
     xp: number;
     totalXp: number;
     level: number;
+    streak: number;
 };
 
 type UserStats = {
     totalXp: number;
     level: number;
+    streak: number;
 };
 
 export function Dashboard() {
@@ -26,6 +28,7 @@ export function Dashboard() {
     const [userStats, setUserStats] = useState<UserStats>({
         totalXp: 0,
         level: 1,
+        streak: 0,
     });
 
     const [syncing, setSyncing] = useState(false);
@@ -39,6 +42,7 @@ export function Dashboard() {
             setUserStats({
                 totalXp: savedStats.totalXp,
                 level: savedStats.level,
+                streak: savedStats.streak,
             });
 
             setSyncing(true);
@@ -49,6 +53,7 @@ export function Dashboard() {
             setUserStats({
                 totalXp: syncResult.totalXp,
                 level: syncResult.level,
+                streak: syncResult.streak,
             });
 
             setSyncing(false);
@@ -95,7 +100,7 @@ export function Dashboard() {
 
                     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <p className="text-sm text-zinc-400">Streak</p>
-                        <p className="text-4xl font-bold">0 Days</p>
+                        <p className="text-4xl font-bold">{userStats.streak} Days</p>
                     </div>
                 </section>
 
