@@ -20,8 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    },
-    "typeRoots": ["./node_modules/@types", "./app/generated/prisma"]
+    }
   },
   "include": [
     "next-env.d.ts",
