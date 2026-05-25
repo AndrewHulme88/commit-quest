@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { getXpForNextLevel } from "@/lib/xp";
 import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
 
 type SyncResult = {
     pushEvents: number;
@@ -73,18 +74,7 @@ export function Dashboard() {
 
     return (
         <main className="min-h-screen bg-zinc-950 text-white">
-            <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
-                <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-                    <h1 className="text-xl font-bold">Commit Quest</h1>
-        
-                    <button
-                    onClick={() => signOut()}
-                    className="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
-                    >
-                    Sign out
-                    </button>
-                </div>
-            </nav>
+            <Navbar />
 
             <div className="mx-auto max-w-6xl px-6 py-10">
                 <section className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 shadow-xl">
