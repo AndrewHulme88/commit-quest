@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { getXpForNextLevel } from "@/lib/xp";
+import { Footer } from "@/components/Footer";
 
 type SyncResult = {
     pushEvents: number;
@@ -173,10 +174,7 @@ export function Dashboard() {
                 </section>
             </div>
 
-            <footer className="border-t border-zinc-800 px-6 py-8 text-center text-sm text-zinc-500">
-                Built for developers who want progress to feel rewarding.
-                &copy; {new Date().getFullYear()} Commit Quest. All rights reserved.
-            </footer>
+            <Footer />
         </main>
     );
 }

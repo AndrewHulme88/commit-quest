@@ -2,6 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { Dashboard } from "@/components/Dashboard";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -66,10 +67,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-800 px-6 py-8 text-center text-sm text-zinc-500">
-        Built for developers who want progress to feel rewarding.
-        &copy; {new Date().getFullYear()} Commit Quest. All rights reserved.
-      </footer>
+      <Footer />
     </main>
   );
 }
