@@ -107,14 +107,16 @@ export function Dashboard() {
                             </div>
                         </div>
 
-                        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
-                            <p className="text-sm text-emerald-300">Current Level</p>
-                            <p className="text-5xl font-black text-emerald-400">{userStats.level}</p>
-                        </div>
+                        <div className="mt-6 flex gap-6 sm:mt-0">
+                            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
+                                <p className="text-sm text-emerald-300">Current Level</p>
+                                <p className="text-5xl font-black text-emerald-400">{userStats.level}</p>
+                            </div>
 
-                        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
-                            <p className="text-sm text-emerald-300">Highest Streak</p>
-                            <p className="text-5xl font-black text-emerald-400">{userStats.highest_streak}</p>
+                            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
+                                <p className="text-sm text-emerald-300">Highest Streak</p>
+                                <p className="text-5xl font-black text-emerald-400">{userStats.highest_streak}</p>
+                            </div>
                         </div>
                     </div>
                 </section>
