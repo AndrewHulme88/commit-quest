@@ -22,6 +22,7 @@ model User {
   level     Int       @default(1)
   lastSync  DateTime?
   streak    Int       @default(0)
+  highest_streak Int  @default(0)
   lastActivityDate  DateTime?
 
   githubEvents  GithubEvent[]

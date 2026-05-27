@@ -83,6 +83,7 @@ export async function GET(req: NextRequest) {
     today.setHours(0, 0, 0, 0);
 
     let streak = user.streak;
+    let highest_streak = user.highest_streak;
 
     if (newPushEvents.length > 0) {
         const lastActivityDate = user.lastActivityDate ? new Date(user.lastActivityDate) : null;
@@ -97,6 +98,10 @@ export async function GET(req: NextRequest) {
 
             if (lastActivityDate.getTime() === yesterday.getTime()) {
                 streak += 1;
+
+                if (streak > highest_streak) {
+                    highest_streak = streak;
+                }
             } else if (lastActivityDate.getTime() === today.getTime()) {
                 streak = user.streak; // No change to streak if they already had activity today
             } else {
@@ -128,6 +133,7 @@ export async function GET(req: NextRequest) {
         data: {
             level,
             streak,
+            highest_streak,
             lastActivityDate: newPushEvents.length > 0 ? new Date() : user.lastActivityDate,
             lastSync: new Date(),
         },
@@ -140,5 +146,6 @@ export async function GET(req: NextRequest) {
         totalXp: updatedUser.xp,
         level: finalUser.level,
         streak: finalUser.streak,
+        highest_streak: finalUser.highest_streak,
     });
 }

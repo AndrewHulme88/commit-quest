@@ -21,6 +21,7 @@ type UserStats = {
     totalXp: number;
     level: number;
     streak: number;
+    highest_streak: number;
 };
 
 export function Dashboard() {
@@ -30,6 +31,7 @@ export function Dashboard() {
         totalXp: 0,
         level: 1,
         streak: 0,
+        highest_streak: 0,
     });
 
     const [syncing, setSyncing] = useState(false);
@@ -44,6 +46,7 @@ export function Dashboard() {
                 totalXp: savedStats.totalXp,
                 level: savedStats.level,
                 streak: savedStats.streak,
+                highest_streak: savedStats.highest_streak,
             });
 
             setSyncing(true);
@@ -55,6 +58,7 @@ export function Dashboard() {
                 totalXp: syncResult.totalXp,
                 level: syncResult.level,
                 streak: syncResult.streak,
+                highest_streak: syncResult.highest_streak,
             });
 
             setSyncing(false);
@@ -106,6 +110,11 @@ export function Dashboard() {
                         <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
                             <p className="text-sm text-emerald-300">Current Level</p>
                             <p className="text-5xl font-black text-emerald-400">{userStats.level}</p>
+                        </div>
+
+                        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-center">
+                            <p className="text-sm text-emerald-300">Highest Streak</p>
+                            <p className="text-5xl font-black text-emerald-400">{userStats.highest_streak}</p>
                         </div>
                     </div>
                 </section>

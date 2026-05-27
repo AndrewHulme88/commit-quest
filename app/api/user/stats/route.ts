@@ -25,5 +25,6 @@ export async function GET(req: NextRequest) {
         totalXp: user?.xp ?? 0,
         level: user?.level ?? 1,
         streak: user?.streak ?? 0,
+        highest_streak: user?.highest_streak ?? 0,
     });
 }
