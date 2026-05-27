@@ -1,5 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Navbar() {
     const { data: session } = useSession();
@@ -7,7 +8,34 @@ export function Navbar() {
     return (
         <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
             <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-                <h1 className="text-xl font-bold">Commit Quest</h1>
+                <Link href="/">
+                    <h1 className="text-xl font-bold">Commit Quest</h1>
+                </Link>
+
+                <div className="flex items-center gap-4">
+                    {session?.user? (
+                        <Link
+                            href="/"
+                            className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                        >
+                            Dashboard
+                        </Link>
+                    ) : (
+                        <Link
+                            href="/"
+                            className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                        >
+                            Home
+                        </Link>
+                    )}
+
+                    <Link
+                        href="/leaderboard"
+                        className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                    >
+                        Leaderboard
+                    </Link>
+                </div>
 
                 <div className="flex items-center gap-5">
                     {session?.user?.image && (
