@@ -108,6 +108,8 @@ export async function GET(req: NextRequest) {
                 streak = 1; // Reset streak if they missed a day
             }
         }
+
+        highest_streak = Math.max(highest_streak, streak);
     }
 
     // Update the user's XP and last sync time in the database
