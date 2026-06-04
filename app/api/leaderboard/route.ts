@@ -1,10 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+    const sort = req.nextUrl.searchParams.get("sort") ?? "xp";
+
+    const allowedSorts = ["xp", "level", "streak", "highest_streak"];
+
+    const sortBy = allowedSorts.includes(sort as any)
+        ? sort
+        : "xp";
+
     const users = await prisma.user.findMany({
         orderBy: {
-            xp: "desc",
+            [sortBy]: "desc",
         },
         take: 10,
         select: {
