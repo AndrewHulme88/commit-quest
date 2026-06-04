@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
     today.setHours(0, 0, 0, 0);
 
     let streak = user.streak;
-    let highest_streak = user.highest_streak;
+    let highest_streak = user.highest_streak ?? 0;
 
     if (newPushEvents.length > 0) {
         const lastActivityDate = user.lastActivityDate ? new Date(user.lastActivityDate) : null;

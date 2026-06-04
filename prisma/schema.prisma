@@ -13,30 +13,45 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  githubId  String    @unique
-  name      String?
-  email     String?
-  image     String?
-  xp        Int       @default(0)
-  level     Int       @default(1)
-  lastSync  DateTime?
-  streak    Int       @default(0)
-  highest_streak Int  @default(0)
+  id                String      @id @default(cuid())
+  githubId          String      @unique
+  name              String?
+  email             String?
+  image             String?
+  xp                Int         @default(0)
+  level             Int         @default(1)
+  lastSync          DateTime?
+  streak            Int         @default(0)
+  highest_streak    Int         @default(0)
   lastActivityDate  DateTime?
 
-  githubEvents  GithubEvent[]
+  githubEvents      GithubEvent[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  following Follow[] @relation("following")
+  followers Follow[] @relation("followers")
 }
 
 model GithubEvent {
-  id        String    @id
-  userId    String
-  type      String
-  xpAwarded Int
-  createdAt DateTime @default(now())
+  id                String      @id
+  userId            String
+  type              String
+  xpAwarded         Int
+  createdAt         DateTime    @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model Follow {
+  id                String      @id @default(cuid())
+  followerId        String
+  followingId       String
+  createdAt         DateTime    @default(now())
+
+  follower User @relation("following", fields: [followerId], references: [id])
+  following User @relation("followers", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
 }
