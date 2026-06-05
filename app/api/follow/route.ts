@@ -2,6 +2,23 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+async function getCurrentUser(req: NextRequest) {
+    const token = await getToken({ 
+        req,
+        secret: process.env.NEXTAUTH_SECRET,
+    });
+
+    const githubId = token?.sub;
+
+    if (!githubId) {
+        return null;
+    }
+
+    return prisma.user.findUnique({
+        where: { githubId },
+    });
+}
+
 export async function POST(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const githubId = token?.sub;
@@ -38,6 +55,27 @@ export async function POST(req: NextRequest) {
         create: {
             followerId: currentUser.id,
             followingId,
+        },
+    });
+
+    return NextResponse.json({ success: true });
+}
+
+export async function DELETE(req: NextRequest) {
+    const currentUser = await getCurrentUser(req);
+
+    if (!currentUser) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { followingId } = await req.json();
+
+    await prisma.follow.delete({
+        where: {
+            followerId_followingId: {
+                followerId: currentUser.id,
+                followingId,
+            },
         },
     });
 
