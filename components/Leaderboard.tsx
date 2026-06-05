@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FollowButton } from "./FollowButton";
 
 type LeaderboardUser = {
     id: string;
@@ -93,18 +94,8 @@ export function Leaderboard() {
                             <p className="font-bold text-emerald-400">{user.xp} XP</p>
                             <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
                         </div>
-                        <button
-                            onClick={() => followUser(user.id)}
-                            className="ml-4 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-zinc-950"
-                        >
-                            Follow
-                        </button>
-                        <button
-                            onClick={() => unfollowUser(user.id)}
-                            className="ml-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-800"
-                        >
-                            Unfollow
-                        </button>
+                        
+                        <FollowButton userId={user.id} />
                     </div>
                 ))}
             </div>
