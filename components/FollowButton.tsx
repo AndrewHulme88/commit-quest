@@ -6,6 +6,7 @@ type Props = {
     userId: string;
 };
 
+// This component displays a follow/unfollow button based on the current follow status between the logged-in user and the target user
 export function FollowButton({ userId }: Props) {
     const [isFollowing, setIsFollowing] = useState(false);
     const [loading, setLoading] = useState(true);

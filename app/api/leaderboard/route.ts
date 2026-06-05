@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// This route returns the top 10 users sorted by the specified criteria (xp, level, streak, or highest_streak)
 export async function GET(req: NextRequest) {
     const sort = req.nextUrl.searchParams.get("sort") ?? "xp";
 

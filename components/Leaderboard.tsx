@@ -14,20 +14,7 @@ type LeaderboardUser = {
     highest_streak: number;
 };
 
-async function followUser(userId: string) {
-    await fetch("/api/follow", {
-        method: "POST",
-        body: JSON.stringify({ followingId: userId }),
-    });
-}
-
-async function unfollowUser(userId: string) {
-    await fetch("/api/unfollow", {
-        method: "DELETE",
-        body: JSON.stringify({ followingId: userId }),
-    });
-}
-
+// This component displays the leaderboard with sorting options and follow buttons for each user
 export function Leaderboard() {
     const [users, setUsers] = useState<LeaderboardUser[]>([]);
     const [sort, setSort] = useState("xp");
@@ -94,7 +81,7 @@ export function Leaderboard() {
                             <p className="font-bold text-emerald-400">{user.xp} XP</p>
                             <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
                         </div>
-                        
+
                         <FollowButton userId={user.id} />
                     </div>
                 ))}

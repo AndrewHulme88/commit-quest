@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// This route checks if the current user is following another user
 export async function GET(req: NextRequest) {
     const token = await getToken({
         req,
@@ -27,6 +28,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    // Check if the current user is following the target user
     const follow = await prisma.follow.findUnique({
         where: {
             followerId_followingId: {
