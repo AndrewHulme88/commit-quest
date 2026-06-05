@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Helper function to get the current user
 async function getCurrentUser(req: NextRequest) {
     const token = await getToken({ 
         req,
@@ -19,6 +20,7 @@ async function getCurrentUser(req: NextRequest) {
     });
 }
 
+// This function handles both following and unfollowing a user based on the HTTP method
 export async function POST(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const githubId = token?.sub;
@@ -61,6 +63,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
 }
 
+// Handle unfollowing a user
 export async function DELETE(req: NextRequest) {
     const currentUser = await getCurrentUser(req);
 
