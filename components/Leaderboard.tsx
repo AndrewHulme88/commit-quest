@@ -13,6 +13,20 @@ type LeaderboardUser = {
     highest_streak: number;
 };
 
+async function followUser(userId: string) {
+    await fetch("/api/follow", {
+        method: "POST",
+        body: JSON.stringify({ followingId: userId }),
+    });
+}
+
+async function unfollowUser(userId: string) {
+    await fetch("/api/unfollow", {
+        method: "DELETE",
+        body: JSON.stringify({ followingId: userId }),
+    });
+}
+
 export function Leaderboard() {
     const [users, setUsers] = useState<LeaderboardUser[]>([]);
     const [sort, setSort] = useState("xp");
@@ -79,6 +93,18 @@ export function Leaderboard() {
                             <p className="font-bold text-emerald-400">{user.xp} XP</p>
                             <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
                         </div>
+                        <button
+                            onClick={() => followUser(user.id)}
+                            className="ml-4 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-zinc-950"
+                        >
+                            Follow
+                        </button>
+                        <button
+                            onClick={() => unfollowUser(user.id)}
+                            className="ml-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-800"
+                        >
+                            Unfollow
+                        </button>
                     </div>
                 ))}
             </div>
