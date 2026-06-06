@@ -32,41 +32,47 @@ export function FollowersList() {
 
     if (followerUsers.length === 0) {
         return (
-            <p className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 text-zinc-400">
-                You have no followers yet. Encourage other developers to follow you!
-            </p>
+            <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 text-zinc-400">
+                <h3 className="mb-3 text-xl font-bold">Followers</h3>
+                <p className="rounded-2xl border border-zinc-800 bg-zinc-800 p-6 text-zinc-400">
+                    You have no followers yet. Encourage other developers to follow you!
+                </p>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-4">
-            {followerUsers.map((followerUser) => (
-                <div
-                    key={followerUser.id}
-                    className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900 p-5"
-                >
-                    <div className="flex items-center gap-4">
-                        {followerUser.image && (
-                            <Image
-                                src={followerUser.image}
-                                alt={followerUser.name ?? "User Avatar"}
-                                width={48}
-                                height={48}
-                                className="rounded-full"
-                            />
-                        )}
+        <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+            <h3 className="mb-6 text-xl font-bold">Followers</h3>
+            <div className="space-y-4">
+                {followerUsers.map((followerUser) => (
+                    <div
+                        key={followerUser.id}
+                        className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-800 p-5"
+                    >
+                        <div className="flex items-center gap-4">
+                            {followerUser.image && (
+                                <Image
+                                    src={followerUser.image}
+                                    alt={followerUser.name ?? "User Avatar"}
+                                    width={48}
+                                    height={48}
+                                    className="rounded-full"
+                                />
+                            )}
 
-                        <div>
-                            <p className="font-semibold">{followerUser.name ?? "Unknown User"}</p>
-                            <p className="text-sm text-zinc-400">
-                                Level {followerUser.level} - {followerUser.xp} XP - {followerUser.streak} day streak
-                            </p>
+                            <div>
+                                <p className="font-semibold">{followerUser.name ?? "Unknown User"}</p>
+                                <p className="text-sm text-zinc-400">
+                                    Level {followerUser.level} - {followerUser.xp} XP - {followerUser.streak} day streak
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <FollowButton userId={followerUser.id} />
-                </div>
-            ))}
-        </div>
+                        <FollowButton userId={followerUser.id} />
+                    </div>
+                ))}
+            </div>
+        </section>
     );
 }

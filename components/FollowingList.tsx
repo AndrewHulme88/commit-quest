@@ -32,41 +32,47 @@ export function FollowingList() {
 
     if (followedUsers.length === 0) {
         return (
-            <p className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 text-zinc-400">
-                You are not following anyone yet. Follow other developers to see their progress and compete on the leaderboards!
-            </p>
+            <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                <h3 className="mb-3 text-xl font-bold">Following</h3>
+                <p className="rounded-2xl border border-zinc-800 bg-zinc-800 p-6 text-zinc-400">
+                    You are not following anyone yet. Follow other developers to see their progress and compete on the leaderboards!
+                </p>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-4">
-            {followedUsers.map((followedUser) => (
-                <div
-                    key={followedUser.id}
-                    className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900 p-5"
-                >
-                    <div className="flex items-center gap-4">
-                        {followedUser.image && (
-                            <Image
-                                src={followedUser.image}
-                                alt={followedUser.name ?? "User Avatar"}
-                                width={48}
-                                height={48}
-                                className="rounded-full"
-                            />
-                        )}
+            <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                <h3 className="mb-3 text-xl font-bold">Following</h3>
+                <div className="space-y-4">
+                    {followedUsers.map((followedUser) => (
+                        <div
+                            key={followedUser.id}
+                            className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-800 p-5"
+                        >
+                        <div className="flex items-center gap-4">
+                            {followedUser.image && (
+                                <Image
+                                    src={followedUser.image}
+                                    alt={followedUser.name ?? "User Avatar"}
+                                    width={48}
+                                    height={48}
+                                    className="rounded-full"
+                                />
+                            )}
 
-                        <div>
-                            <p className="font-semibold">{followedUser.name ?? "Unknown User"}</p>
-                            <p className="text-sm text-zinc-400">
-                                Level {followedUser.level} - {followedUser.xp} XP - {followedUser.streak} day streak
-                            </p>
+                            <div>
+                                <p className="font-semibold">{followedUser.name ?? "Unknown User"}</p>
+                                <p className="text-sm text-zinc-400">
+                                    Level {followedUser.level} - {followedUser.xp} XP - {followedUser.streak} day streak
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <FollowButton userId={followedUser.id} />
-                </div>
-            ))}
-        </div>
+                        <FollowButton userId={followedUser.id} />
+                    </div>
+                ))}
+            </div>
+        </section>
     );
 }
