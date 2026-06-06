@@ -24,6 +24,7 @@ type UserStats = {
     highest_streak: number;
 };
 
+// This component displays the user's dashboard with their current XP, level, streak, and sync status with GitHub
 export function Dashboard() {
     const { data: session } = useSession();
 
@@ -51,7 +52,16 @@ export function Dashboard() {
 
             setSyncing(true);
 
+            // Trigger a sync with GitHub to get the latest activity and update stats
             const syncResponse = await fetch("/api/github/activity");
+
+            // Handle potential errors from the sync API
+            if (!syncResponse.ok) {
+                console.error("Failed to sync with GitHub: ", await syncResponse.text());
+                setSyncing(false);
+                return;
+            }
+
             const syncResult = await syncResponse.json();
 
             setUserStats({

@@ -37,6 +37,15 @@ export async function GET(req: NextRequest) {
 
     const events = await eventsResponse.json();
 
+    // Check if the GitHub API request was successful and if the response is an array
+    if (!eventsResponse.ok) {
+        return NextResponse.json({ error: "Failed to fetch GitHub activity" }, { status: eventsResponse.status });
+    }
+
+    if (!Array.isArray(events)) {
+        return NextResponse.json({ error: "GitHub response was not an array" }, { status: 500 });
+    }
+
     // Filter for push events
     const pushEvents = events.filter(
         (event: any) => event.type === "PushEvent"
