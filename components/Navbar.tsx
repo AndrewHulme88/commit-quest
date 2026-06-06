@@ -30,6 +30,13 @@ export function Navbar() {
                     )}
 
                     <Link
+                        href="/social"
+                        className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                    >
+                        Social
+                    </Link>
+
+                    <Link
                         href="/leaderboard"
                         className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
                     >
