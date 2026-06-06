@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FollowingList } from "@/components/FollowingList";
+import { FollowersList } from "@/components/FollowersList";
 
 export default function SocialPage() {
     return (
@@ -18,7 +19,9 @@ export default function SocialPage() {
                             <div className="mt-10">
                                 <FollowingList />
                             </div>
-        
+                            <div className="mt-10">
+                                <FollowersList />
+                            </div>
 
                         </section>
         
