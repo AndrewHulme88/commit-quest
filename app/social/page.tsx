@@ -2,6 +2,7 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SocialList } from "@/components/SocialList";
 
 export default function SocialPage() {
     return (
@@ -14,6 +15,9 @@ export default function SocialPage() {
                             <p className="mt-3 text-zinc-400">
                                 Social features are coming soon! Follow your friends and see how you stack up against other developers in the community. Stay tuned for updates!
                             </p>
+                            <div className="mt-10">
+                                <SocialList />
+                            </div>
         
 
                         </section>
