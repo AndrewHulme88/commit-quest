@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { SocialList } from "@/components/SocialList";
+import { FollowingList } from "@/components/FollowingList";
 
 export default function SocialPage() {
     return (
@@ -16,7 +16,7 @@ export default function SocialPage() {
                                 Social features are coming soon! Follow your friends and see how you stack up against other developers in the community. Stay tuned for updates!
                             </p>
                             <div className="mt-10">
-                                <SocialList />
+                                <FollowingList />
                             </div>
         
 
