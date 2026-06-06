@@ -36,9 +36,9 @@ export async function GET(req: NextRequest) {
                     level: true,
                     streak: true,
                     highest_streak: true,
-                },
-            },
-        },
+                }
+            }
+        }
     });
 
     // Map the results to return only the followed users' information
