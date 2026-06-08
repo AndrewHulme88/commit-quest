@@ -29,19 +29,27 @@ export function Navbar() {
                         </Link>
                     )}
 
-                    <Link
-                        href="/social"
-                        className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
-                    >
-                        Social
-                    </Link>
+                    {session?.user? (
+                        <Link
+                            href="/social"
+                            className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                        >
+                            Social
+                        </Link>
+                    ) : (
+                        null
+                    )}
 
-                    <Link
-                        href="/leaderboard"
-                        className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
-                    >
-                        Leaderboard
-                    </Link>
+                    {session?.user? (
+                        <Link
+                            href="/leaderboard"
+                            className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                        >
+                            Leaderboard
+                        </Link>
+                    ) : (
+                        null
+                    )}
                 </div>
 
                 <div className="flex items-center gap-5">
