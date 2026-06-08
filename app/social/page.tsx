@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FollowingList } from "@/components/FollowingList";
@@ -10,6 +12,18 @@ type SocialTab = "following" | "followers";
 
 export default function SocialPage() {
     const [activeTab, setActiveTab] = useState<SocialTab>("following");
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    // If the user is not authenticated, redirect to the home page
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/");
+        }
+    }, [status, router]);
+
+    if (status === "loading") return null;
+    if (!session) return null;
 
     return (
                 <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
