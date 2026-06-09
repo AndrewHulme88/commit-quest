@@ -38,6 +38,42 @@ async function main() {
         ],
         skipDuplicates: true,
     });
+
+    await prisma.achievement.createMany({
+        data: [
+            {
+                key: "first_xp",
+                name: "First Step",
+                description: "Earn your first XP",
+                icon: "🌱",
+            },
+            {
+                key: "xp_100",
+                name: "Getting Started",
+                description: "Earn 100 XP",
+                icon: "🚀",
+            },
+            {
+                key: "level_5",
+                name: "Level 5",
+                description: "Reach level 5",
+                icon: "🎉",
+            },
+            {
+                key: "streak_3",
+                name: "Streak Starter",
+                description: "Maintain a 3 day streak",
+                icon: "🔥",
+            },
+            {
+                key: "first_follow",
+                name: "Greetings",
+                description: "Follow your first user",
+                icon: "🤝",
+            },
+        ],
+        skipDuplicates: true,
+    })
 }
 
 main()
