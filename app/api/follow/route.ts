@@ -1,6 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { unlockAchievement } from "@/lib/achievements";
 
 // Helper function to get the current user
 async function getCurrentUser(req: NextRequest) {
@@ -59,6 +60,8 @@ export async function POST(req: NextRequest) {
             followingId,
         },
     });
+
+    await unlockAchievement(currentUser.id, "first_follow");
 
     return NextResponse.json({ success: true });
 }

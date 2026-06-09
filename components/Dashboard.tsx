@@ -24,6 +24,13 @@ type UserStats = {
     highest_streak: number;
 };
 
+type Achievement = {
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+};
+
 // This component displays the user's dashboard with their current XP, level, streak, and sync status with GitHub
 export function Dashboard() {
     const { data: session } = useSession();
@@ -38,10 +45,15 @@ export function Dashboard() {
     const [syncing, setSyncing] = useState(false);
     const [lastSync, setLastSync] = useState<SyncResult | null>(null);
 
+    const [achievements, setAchievements] = useState<Achievement[]>([]);
+
     useEffect(() => {
         async function loadDashboard() {
             const statsResponse = await fetch("/api/user/stats");
             const savedStats = await statsResponse.json();
+            const achievementsResponse = await fetch("api/achievements");
+            const achievementsData = await achievementsResponse.json();
+            setAchievements(achievementsData);
             
             setUserStats({
                 totalXp: savedStats.totalXp,
@@ -184,6 +196,29 @@ export function Dashboard() {
                             </p>
                         )}
                     </section>
+
+                    <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                        <h3 className="text-xl font-bold">Achievements</h3>
+
+                        <div className="mt-4 grid gap-4 md:grid-cols-2">
+                            {achievements.map((achievement) => (
+                                <div
+                                    key={achievement.id}
+                                    className="rounded-xl border border-zinc-800 bg-zinc-800 p-4"
+                                >
+                                    <p className="text-3xl">{achievement.icon}</p>
+                                    <p className="mt-2 font-bold">{achievement.name}</p>
+                                    <p className="text-sm text-zinc-400">{achievement.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* {lastSync?.unlockedAchievements?.length > 0 && (
+                        <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
+                            Achievement Unlocked: {lastSync.unlockedAchievements[0].achievement.name}
+                        </div>
+                    )} */}
                 </div>
 
             </main>

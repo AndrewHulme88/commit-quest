@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateLevel }  from "@/lib/xp";
+import { checkSyncAchievements } from "@/lib/achievements";
 
 // This route fetches the authenticated user's GitHub activity using their access token
 export async function GET(req: NextRequest) {
@@ -150,6 +151,13 @@ export async function GET(req: NextRequest) {
         },
     });
 
+    const unlockedAchievements = await checkSyncAchievements({
+        id: finalUser.id,
+        xp: finalUser.xp,
+        level: finalUser.level,
+        streak: finalUser.streak,
+    });
+
     return NextResponse.json({
         pushEvents: pushEvents.length,
         newPushEvents: newPushEvents.length,
@@ -158,5 +166,6 @@ export async function GET(req: NextRequest) {
         level: finalUser.level,
         streak: finalUser.streak,
         highest_streak: finalUser.highest_streak,
+        unlockedAchievements,
     });
 }

@@ -28,8 +28,10 @@ export async function checkSyncAchievements(user: {
     level: number;
     streak: number;
 }) {
-    if (user.xp > 0) await unlockAchievement(user.id, "first_xp");
-    if (user.xp >= 100) await unlockAchievement(user.id, "xp_100");
-    if (user.level >= 5) await unlockAchievement(user.id, "level_5");
-    if (user.streak >= 3) await unlockAchievement(user.id, "streak_3");
+    const unlocked = []
+
+    if (user.xp > 0) unlocked.push(await unlockAchievement(user.id, "first_xp"));
+    if (user.xp >= 100) unlocked.push(await unlockAchievement(user.id, "xp_100"));
+    if (user.level >= 5) unlocked.push(await unlockAchievement(user.id, "level_5"));
+    if (user.streak >= 3) unlocked.push(await unlockAchievement(user.id, "streak_3"));
 }
