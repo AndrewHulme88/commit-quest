@@ -32,6 +32,8 @@ model User {
 
   following Follow[] @relation("following")
   followers Follow[] @relation("followers")
+
+  achievements      UserAchievement[]
 }
 
 model GithubEvent {
@@ -54,4 +56,27 @@ model Follow {
   following User @relation("followers", fields: [followingId], references: [id])
 
   @@unique([followerId, followingId])
+}
+
+model Achievement {
+  id                String      @id @default(cuid())
+  key               String      @unique
+  name              String
+  description       String
+  icon              String
+  createdAt         DateTime    @default(now())
+
+  users UserAchievement[]
+}
+
+model UserAchievement {
+  id                String      @id @default(cuid())
+  userId            String
+  achievementId     String
+  unlockedAt        DateTime    @default(now())
+
+  user              User        @relation(fields: [userId], references: [id])
+  achievement       Achievement @relation(fields: [achievementId], references: [id])
+
+  @@unique([userId, achievementId])
 }
