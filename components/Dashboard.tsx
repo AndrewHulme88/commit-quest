@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getXpForNextLevel } from "@/lib/xp";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { toast } from "sonner";
 
 type SyncResult = {
     pushEvents: number;
@@ -63,9 +64,6 @@ export function Dashboard() {
         async function loadDashboard() {
             const statsResponse = await fetch("/api/user/stats");
             const savedStats = await statsResponse.json();
-            const achievementsResponse = await fetch("api/achievements");
-            const achievementsData = await achievementsResponse.json();
-            setAchievements(achievementsData);
             
             setUserStats({
                 totalXp: savedStats.totalXp,
@@ -87,6 +85,16 @@ export function Dashboard() {
             }
 
             const syncResult = await syncResponse.json();
+
+            syncResult.unlockedAchievements?.forEach((unlock: UnlockedAchievement) => {
+                toast.success(`Achievement Unlocked: ${unlock.achievement.name}`, {
+                    description: unlock.achievement.description,
+                });
+            });
+
+            const achievementsResponse = await fetch("/api/achievements");
+            const achievementsData = await achievementsResponse.json();
+            setAchievements(achievementsData);
 
             setUserStats({
                 totalXp: syncResult.totalXp,
@@ -207,13 +215,6 @@ export function Dashboard() {
                                 No new commits since your last sync. Keep building to earn XP!
                             </p>
                         )}
-
-                        {lastSync?.unlockedAchievements?.length ?(
-                            <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
-                                Achievement Unlocked: {" "}
-                                {lastSync.unlockedAchievements?.[0]?.achievement?.name}
-                            </div>
-                        ) : null}
                     </section>
 
                     <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">

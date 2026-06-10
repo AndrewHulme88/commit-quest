@@ -61,9 +61,15 @@ export async function POST(req: NextRequest) {
         },
     });
 
-    await unlockAchievement(currentUser.id, "first_follow");
+    const unlockedAchievement = await unlockAchievement(
+        currentUser.id, 
+        "first_follow"
+    );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ 
+        success: true,
+        unlockAchievements: unlockAchievement ? [unlockAchievement] : [],
+    });
 }
 
 // Handle unfollowing a user
