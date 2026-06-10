@@ -15,6 +15,7 @@ type SyncResult = {
     totalXp: number;
     level: number;
     streak: number;
+    unlockedAchievements: UnlockedAchievement[];
 };
 
 type UserStats = {
@@ -29,6 +30,17 @@ type Achievement = {
     name: string;
     description: string;
     icon: string;
+};
+
+type UnlockedAchievement = {
+    id: string;
+    achievement: {
+        id: string;
+        key: string;
+        name: string;
+        description: string;
+        icon: string;
+    };
 };
 
 // This component displays the user's dashboard with their current XP, level, streak, and sync status with GitHub
@@ -195,6 +207,13 @@ export function Dashboard() {
                                 No new commits since your last sync. Keep building to earn XP!
                             </p>
                         )}
+
+                        {lastSync?.unlockedAchievements?.length ?(
+                            <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
+                                Achievement Unlocked: {" "}
+                                {lastSync.unlockedAchievements?.[0]?.achievement?.name}
+                            </div>
+                        ) : null}
                     </section>
 
                     <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
@@ -213,12 +232,6 @@ export function Dashboard() {
                             ))}
                         </div>
                     </section>
-
-                    {/* {lastSync?.unlockedAchievements?.length > 0 && (
-                        <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
-                            Achievement Unlocked: {lastSync.unlockedAchievements[0].achievement.name}
-                        </div>
-                    )} */}
                 </div>
 
             </main>
