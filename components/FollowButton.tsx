@@ -50,7 +50,7 @@ export function FollowButton({ userId }: Props) {
                 description: unlock.achievement.description,
             });
         });
-
+        
         setIsFollowing(!isFollowing);
         setLoading(false);
     }

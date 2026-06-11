@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FollowButton } from "./FollowButton";
+import { ViewProfileButton } from "./ViewProfileButton";
 
 type LeaderboardUser = {
     id: string;
@@ -81,8 +82,11 @@ export function Leaderboard() {
                             <p className="font-bold text-emerald-400">{user.xp} XP</p>
                             <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
                         </div>
-
-                        <FollowButton userId={user.id} />
+                        
+                        <div>
+                            <ViewProfileButton userId={user.id} />
+                            <FollowButton userId={user.id} />
+                        </div>
                     </div>
                 ))}
             </div>

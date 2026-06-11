@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { FollowButton } from "./FollowButton";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type FollowerUser = {
     id: string;
@@ -62,7 +63,9 @@ export function FollowersList() {
                             )}
 
                             <div>
-                                <p className="font-semibold">{followerUser.name ?? "Unknown User"}</p>
+                                <Link href={`/profile/${followerUser.id}`}>
+                                    {followerUser.name}
+                                </Link>
                                 <p className="text-sm text-zinc-400">
                                     Level {followerUser.level} - {followerUser.xp} XP - {followerUser.streak} day streak
                                 </p>
