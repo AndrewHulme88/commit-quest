@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { FollowButton } from "./FollowButton";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { ViewProfileButton } from "./ViewProfileButton";
 
 type FollowedUser = {
     id: string;
@@ -63,16 +63,17 @@ export function FollowingList() {
                             )}
 
                             <div>
-                                <Link href={`/profile/${followedUser.id}`}>
-                                    {followedUser.name}
-                                </Link>
+                                <p className="font-semibold">{followedUser.name ?? "Unknown User"}</p>
                                 <p className="text-sm text-zinc-400">
                                     Level {followedUser.level} - {followedUser.xp} XP - {followedUser.streak} day streak
                                 </p>
                             </div>
                         </div>
 
-                        <FollowButton userId={followedUser.id} />
+                        <div className="flex items-center gap-2">
+                            <ViewProfileButton userId={followedUser.id} />
+                            <FollowButton userId={followedUser.id} />
+                        </div>
                     </div>
                 ))}
             </div>

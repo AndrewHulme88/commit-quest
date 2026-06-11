@@ -83,7 +83,7 @@ export function Leaderboard() {
                             <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
                         </div>
                         
-                        <div>
+                        <div className="flex items-center gap-2">
                             <ViewProfileButton userId={user.id} />
                             <FollowButton userId={user.id} />
                         </div>
