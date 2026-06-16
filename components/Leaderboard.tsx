@@ -7,86 +7,142 @@ import { ViewProfileButton } from "./ViewProfileButton";
 
 type LeaderboardUser = {
     id: string;
-    name: string;
-    image: string;
+    name: string | null;
+    image: string | null;
     xp: number;
     level: number;
     streak: number;
     highest_streak: number;
 };
 
+type SortBy = "xp" | "level" | "streak" | "highest_streak";
+type Scope = "global" | "following";
+
+const sortOptions: { label: string; value: SortBy }[] = [
+    { label: "XP", value: "xp" },
+    { label: "Level", value: "level" },
+    { label: "Current Streak", value: "streak" },
+    { label: "Highest Streak", value: "highest_streak" },
+];
+
+const scopeOptions: { label: string; value: Scope }[] = [
+    { label: "Global", value: "global" },
+    { label: "Following", value: "following"},
+];
+
 // This component displays the leaderboard with sorting options and follow buttons for each user
 export function Leaderboard() {
     const [users, setUsers] = useState<LeaderboardUser[]>([]);
     const [sort, setSort] = useState("xp");
+    const [scope, setScope] = useState<Scope>("global");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function loadLeaderboard() {
-            const response = await fetch(`/api/leaderboard?sort=${sort}`);
+            setLoading(true);
+
+            const response = await fetch(`/api/leaderboard?scope=${scope}&sort=${sort}`);
             const data = await response.json();
 
             setUsers(data);
+            setLoading(false);
         }
 
         loadLeaderboard();
-    }, [sort]);
+    }, [scope, sort]);
 
     return (
         <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-            <h2 className="mb-6 text-2xl font-bold">Leaderboard</h2>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                <h2 className="text-2xl font-bold">Leaderboard</h2>
+                <p className="mt-1 text-sm text-zinc-400">
+                    Compare your progress with other developers.
+                </p>
+                </div>
+            </div>
 
-            <div className="mb-6 flex flex-wrap gap-2">
-                {[
-                    { label: "XP", value: "xp" },
-                    { label: "Level", value: "level" },
-                    { label: "Current Streak", value: "streak" },
-                    { label: "Highest Streak", value: "highest_streak" },
-                ].map((option) => (
-                    <button
-                        key={option.value}
-                        onClick={() => setSort(option.value)}
-                        className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                            sort === option.value
-                                ? "bg-emerald-500 text-zinc-950"
-                                : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-                        }`}
-                        >
-                            {option.label}
-                        </button>
+            <div className="mt-6 flex flex-wrap gap-2">
+                {scopeOptions.map((option) => (
+                <button
+                    key={option.value}
+                    onClick={() => setScope(option.value)}
+                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                    scope === option.value
+                        ? "bg-emerald-500 text-zinc-950"
+                        : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                    }`}
+                >
+                    {option.label}
+                </button>
                 ))}
             </div>
 
-            <div className="space-y-4">
-                {users.map((user, index) => (
+            <div className="mt-4 flex flex-wrap gap-2">
+                {sortOptions.map((option) => (
+                <button
+                    key={option.value}
+                    onClick={() => setSort(option.value)}
+                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                    sort === option.value
+                        ? "bg-zinc-100 text-zinc-950"
+                        : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                    }`}
+                >
+                    {option.label}
+                </button>
+                ))}
+            </div>
+
+            <div className="mt-6 space-y-4">
+                {loading && (
+                <p className="text-sm text-zinc-400">Loading leaderboard...</p>
+                )}
+
+                {!loading && users.length === 0 && (
+                <p className="rounded-xl border border-zinc-800 bg-zinc-800 p-5 text-zinc-400">
+                    {scope === "following"
+                    ? "You are not following anyone yet."
+                    : "No users found."}
+                </p>
+                )}
+
+                {!loading &&
+                users.map((user, index) => (
                     <div
-                        key={user.id}
-                        className="flex items-center justify-between rounded-xl border border-zinc-800 bg-zinc-950 p-4"
+                    key={user.id}
+                    className="flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-800 p-5 sm:flex-row sm:items-center sm:justify-between"
                     >
-                        <div className="flex items-center gap-4">
-                            <p className="w-6 text-lg font-bold text-zinc-500">#{index + 1}</p>
-                            <Image
-                                src={user.image}
-                                alt={user.name}
-                                width={48}
-                                height={48}
-                                className="rounded-full"
-                            />
+                    <div className="flex items-center gap-4">
+                        <p className="w-8 text-lg font-bold text-zinc-500">
+                        #{index + 1}
+                        </p>
 
-                            <div>
-                                <p className="font-semibold">{user.name}</p>
-                                <p className="text-sm text-zinc-400">Level {user.level}</p>
-                            </div>
-                        </div>
+                        {user.image && (
+                        <Image
+                            src={user.image}
+                            alt={user.name ?? "User avatar"}
+                            width={48}
+                            height={48}
+                            className="rounded-full"
+                        />
+                        )}
 
-                        <div className="text-right">
-                            <p className="font-bold text-emerald-400">{user.xp} XP</p>
-                            <p className="text-sm text-zinc-500">Highest Streak: {user.highest_streak}</p>
+                        <div>
+                        <p className="font-semibold">
+                            {user.name ?? "Unknown User"}
+                        </p>
+                        <p className="text-sm text-zinc-400">
+                            Level {user.level} · {user.xp} XP · {user.streak} day
+                            streak · Best {user.highest_streak}
+                        </p>
                         </div>
-                        
-                        <div className="flex items-center gap-2">
-                            <ViewProfileButton userId={user.id} />
-                            <FollowButton userId={user.id} />
-                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                        <ViewProfileButton userId={user.id} />
+                        <FollowButton userId={user.id} />
+                    </div>
                     </div>
                 ))}
             </div>
