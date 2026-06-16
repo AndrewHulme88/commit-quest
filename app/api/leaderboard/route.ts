@@ -48,7 +48,10 @@ export async function GET(req: NextRequest) {
             },
         });
 
-        const followingIds = follows.map((follow) => follow.followingId);
+        const followingIds = [
+            currentUser.id,
+            ...follows.map((follow) => follow.followingId),
+        ];
 
         if (followingIds.length === 0) {
             return NextResponse.json([]);
