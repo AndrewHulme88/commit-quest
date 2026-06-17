@@ -28,6 +28,15 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    const isSelf = currentUser.id === targetUserId;
+
+    if (isSelf) {
+        return NextResponse.json({
+            isFollowing: false,
+            isSelf: true,
+        });
+    }
+
     // Check if the current user is following the target user
     const follow = await prisma.follow.findUnique({
         where: {

@@ -21,6 +21,7 @@ type UnlockedAchievement = {
 // This component displays a follow/unfollow button based on the current follow status between the logged-in user and the target user
 export function FollowButton({ userId }: Props) {
     const [isFollowing, setIsFollowing] = useState(false);
+    const [isSelf, setIsSelf] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export function FollowButton({ userId }: Props) {
             const data = await response.json();
 
             setIsFollowing(data.isFollowing);
+            setIsSelf(data.isSelf);
             setLoading(false);
         }
 
@@ -36,6 +38,8 @@ export function FollowButton({ userId }: Props) {
     }, [userId]);
 
     async function toggleFollow() {
+        if (isSelf) return;
+
         setLoading(true);
 
         const response = await fetch(`/api/follow`, {
@@ -54,6 +58,8 @@ export function FollowButton({ userId }: Props) {
         setIsFollowing(!isFollowing);
         setLoading(false);
     }
+
+    if (isSelf) return null;
 
     return (
         <button

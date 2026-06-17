@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({
+        id: user?.id,
         totalXp: user?.xp ?? 0,
         level: user?.level ?? 1,
         streak: user?.streak ?? 0,
