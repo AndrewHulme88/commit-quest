@@ -14,6 +14,38 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
+    const githubId = token.sub;
+
+    if (!githubId) {
+        return NextResponse.json({ error: "Missing GitHub ID" }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { githubId },
+    });
+
+    if (!user) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Caching to limit syncing to 5 minute cooldown
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+    if (user.lastSync && user.lastSync > fiveMinutesAgo) {
+        return NextResponse.json({
+            skipped: true,
+            message: "Recently synced",
+            pushEvents: 0,
+            newPushEvents: 0,
+            xp: 0,
+            totalXp: user.xp,
+            level: user.level,
+            streak: user.streak,
+            highest_streak: user.highest_streak,
+            unlockedAchievements: [],
+        });
+    }
+
     // Fetch the authenticated user's GitHub profile
     const userResponse = await fetch("https://api.github.com/user", {
         headers: {
@@ -53,18 +85,6 @@ export async function GET(req: NextRequest) {
     );
 
     // Calculate XP and level based on the number of push events
-    const pushEventCount = pushEvents.length;
-
-    const githubId = token.sub;
-
-    const user = await prisma.user.findUnique({
-        where: { githubId },
-    });
-
-    if (!user) {
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
     const newPushEvents = [];
 
     for (const event of pushEvents) {

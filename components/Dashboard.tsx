@@ -10,6 +10,8 @@ import { Navbar } from "@/components/Navbar";
 import { toast } from "sonner";
 
 type SyncResult = {
+    skipped?: boolean,
+    message?: string,
     pushEvents: number;
     newPushEvents: number;
     xp: number;
@@ -204,7 +206,12 @@ export function Dashboard() {
 
                     <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                         <h3 className="text-xl font-bold">Latest Sync</h3>
-                        {syncing && (<p className="text-sm text-zinc-400">Syncing with GitHub...</p>)}
+                        {syncing && (<p className="text-sm text-zinc-400">Checking sync status...</p>)}
+                        {!syncing && lastSync?.skipped && (
+                            <p className="text-sm text-zinc-400">
+                                Recently synced. Check again in a few minutes.
+                            </p>
+                        )}
                         {!syncing && lastSync && lastSync.xp > 0 && (
                             <p className="text-sm text-emerald-400">
                                 +{lastSync.xp} XP from {lastSync.newPushEvents} new commits!
