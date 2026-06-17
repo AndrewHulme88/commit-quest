@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateLevel }  from "@/lib/xp";
 import { checkSyncAchievements } from "@/lib/achievements";
+import { calculateStreak } from "@/lib/streak";
 
 // This route fetches the authenticated user's GitHub activity using their access token
 export async function GET(req: NextRequest) {
@@ -109,38 +110,12 @@ export async function GET(req: NextRequest) {
     });
 
     // Calculate the user's current streak
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    let streak = user.streak;
-    let highest_streak = user.highest_streak ?? 0;
-
-    if (newPushEvents.length > 0) {
-        const lastActivityDate = user.lastActivityDate ? new Date(user.lastActivityDate) : null;
-
-        if (!lastActivityDate) {
-            streak = 1;
-        } else {
-            lastActivityDate.setHours(0, 0, 0, 0);
-
-            const yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 1);
-
-            if (lastActivityDate.getTime() === yesterday.getTime()) {
-                streak += 1;
-
-                if (streak > highest_streak) {
-                    highest_streak = streak;
-                }
-            } else if (lastActivityDate.getTime() === today.getTime()) {
-                streak = user.streak; // No change to streak if they already had activity today
-            } else {
-                streak = 1; // Reset streak if they missed a day
-            }
-        }
-
-        highest_streak = Math.max(highest_streak, streak);
-    }
+    const { streak, highest_streak } = calculateStreak({
+        currentStreak: user.streak,
+        highestStreak: user.highest_streak ?? 0,
+        lastActivityDate: user.lastActivityDate,
+        hasNewActivity: newPushEvents.length > 0,
+    });
 
     // Update the user's XP and last sync time in the database
     const updatedUser = await prisma.user.update({
