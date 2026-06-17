@@ -212,12 +212,12 @@ export function Dashboard() {
                                 Recently synced. Check again in a few minutes.
                             </p>
                         )}
-                        {!syncing && lastSync && lastSync.xp > 0 && (
+                        {!syncing && lastSync && !lastSync.skipped && lastSync.xp > 0 && (
                             <p className="text-sm text-emerald-400">
                                 +{lastSync.xp} XP from {lastSync.newPushEvents} new commits!
                             </p>
                         )}
-                        {!syncing && lastSync && lastSync.xp === 0 && (
+                        {!syncing && lastSync && !lastSync.skipped && lastSync.xp === 0 && (
                             <p className="text-sm text-zinc-400">
                                 No new commits since your last sync. Keep building to earn XP!
                             </p>
