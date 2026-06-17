@@ -16,7 +16,7 @@ export function calculateStreak({
     if (!hasNewActivity) {
         return {
             streak: currentStreak,
-            highestStreak: highestStreak,
+            highest_streak: highestStreak,
         };
     }
 
