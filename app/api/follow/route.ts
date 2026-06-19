@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { unlockAchievement } from "@/lib/achievements";
+import { canFollowUser } from "@/lib/follow";
 
 // Helper function to get the current user
 async function getCurrentUser(req: NextRequest) {
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    if (currentUser.id === followingId) {
+    if (!canFollowUser(currentUser.id, followingId)) {
         return NextResponse.json(
             { error: "You cannot follow yourself" },
             { status: 400 }
