@@ -10,16 +10,18 @@ type LeaderboardUser = {
     name: string | null;
     image: string | null;
     xp: number;
+    weeklyXp?: number;
     level: number;
     streak: number;
     highest_streak: number;
 };
 
-type SortBy = "xp" | "level" | "streak" | "highest_streak";
+type SortBy = "xp" | "weekly_xp" | "level" | "streak" | "highest_streak";
 type Scope = "global" | "following";
 
 const sortOptions: { label: string; value: SortBy }[] = [
     { label: "XP", value: "xp" },
+    { label: "Weekly XP", value: "weekly_xp" },
     { label: "Level", value: "level" },
     { label: "Current Streak", value: "streak" },
     { label: "Highest Streak", value: "highest_streak" },
@@ -133,8 +135,15 @@ export function Leaderboard() {
                             {user.name ?? "Unknown User"}
                         </p>
                         <p className="text-sm text-zinc-400">
-                            Level {user.level} · {user.xp} XP · {user.streak} day
-                            streak · Best {user.highest_streak}
+                            {sort === "weekly_xp" ? (
+                                <>
+                                    {user.weeklyXp ?? 0} XP this week - Level {user.level} - {" "} {user.xp} total XP
+                                </>
+                            ) : (
+                                <>
+                                    Level {user.level} - {user.xp} XP - {user.streak} day streak - Best{" "}{user.highest_streak}
+                                </>
+                            )}
                         </p>
                         </div>
                     </div>
