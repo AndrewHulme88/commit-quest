@@ -1,7 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { start } from "repl";
 
 const allowedSorts = ["xp", "weekly_xp", "level", "streak", "highest_streak"];
 type SortBy = (typeof allowedSorts)[number];
@@ -25,7 +24,7 @@ async function getCurrentUser(req: NextRequest) {
 // Function to get the current week for the weekly leaderboard
 function getStartOfWeek() {
     const date = new Date();
-    const day = date.getDate();
+    const day = date.getDay();
     const diff = date.getDate() - day;
 
     date.setDate(diff);
@@ -116,7 +115,7 @@ export async function GET(req: NextRequest) {
 
             return {
                 ...user,
-                weeklySp: score._sum.xpAwarded ?? 0,
+                weeklyXp: score._sum.xpAwarded ?? 0,
             };
         });
 
