@@ -43,6 +43,7 @@ export async function GET(req: NextRequest) {
         ? (sort as SortBy)
         : "xp";
 
+    // Weekly leaderboard logic
     if (sortBy === "weekly_xp") {
         const startOfWeek = getStartOfWeek();
 
