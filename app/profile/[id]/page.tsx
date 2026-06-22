@@ -17,6 +17,7 @@ type Achievement = {
 type Profile = {
     id: string;
     name: string | null;
+    bio: string | null;
     image: string | null;
     xp: number;
     level: number;
@@ -71,6 +72,11 @@ export default function ProfilePage() {
                                 <h1 className="mt-2 text-4xl font-bold">
                                     {profile.name ?? "Unknown User"}
                                 </h1>
+                                {profile.bio && (
+                                    <p className="mt-3 max-w-xl text-zinc-300">
+                                        {profile.bio}
+                                    </p>
+                                )}
                                 <p className="mt-2 text-zinc-400">
                                     Level {profile.level} - {profile.xp} XP
                                 </p>

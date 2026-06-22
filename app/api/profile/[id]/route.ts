@@ -12,6 +12,7 @@ export async function GET(
         select: {
             id: true,
             name: true,
+            bio: true,
             image: true,
             xp: true,
             level: true,
@@ -38,6 +39,7 @@ export async function GET(
     return NextResponse.json({
         id: user.id,
         name: user.name,
+        bio: user.bio,
         image: user.image,
         xp: user.xp,
         level: user.level,
