@@ -17,7 +17,7 @@ async function getCurrentUser(req: NextRequest) {
     if (!githubId) return null;
 
     return prisma.user.findUnique({
-        where: { githubId, isPublic: true },
+        where: { githubId },
     });
 }
 
@@ -155,6 +155,10 @@ export async function GET(req: NextRequest) {
                 id: {
                     in: followingIds,
                 },
+                OR: [
+                    { isPublic: true },
+                    { id: currentUser.id },
+                ],
             },
             orderBy: {
                 [sortBy]: "desc",
@@ -175,6 +179,7 @@ export async function GET(req: NextRequest) {
     }
 
     const users = await prisma.user.findMany({
+        where: { isPublic: true },
         orderBy: {
             [sortBy]: "desc",
         },

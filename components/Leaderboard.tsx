@@ -38,15 +38,27 @@ export function Leaderboard() {
     const [sort, setSort] = useState("xp");
     const [scope, setScope] = useState<Scope>("global");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadLeaderboard() {
             setLoading(true);
+            setError(null);
 
             const response = await fetch(`/api/leaderboard?scope=${scope}&sort=${sort}`);
+
+            if (!response.ok) {
+                const data = await response.json();
+
+                setUsers([]);
+                setError(data.error ?? "Failed to load leaderboard");
+                setLoading(false);
+                return;
+            }
+
             const data = await response.json();
 
-            setUsers(data);
+            setUsers(Array.isArray(data) ? data : []);
             setLoading(false);
         }
 
@@ -63,6 +75,12 @@ export function Leaderboard() {
                 </p>
                 </div>
             </div>
+
+            {!loading && error && (
+                <p className="rounded-xl border border-red-900/50 bg-red-950/30 p-5 text-red-300">
+                    {error}
+                </p>
+            )}
 
             <div className="mt-6 flex flex-wrap gap-2">
                 {scopeOptions.map((option) => (
