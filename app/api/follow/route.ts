@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { unlockAchievement } from "@/lib/achievements";
 import { canFollowUser } from "@/lib/follow";
+import { createActivity } from "@/lib/activity";
 
 // Helper function to get the current user
 async function getCurrentUser(req: NextRequest) {
@@ -48,15 +49,25 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    await prisma.follow.upsert({
+    const existingFollow = await prisma.follow.findUnique({
         where: {
             followerId_followingId: {
                 followerId: currentUser.id,
                 followingId,
             },
         },
-        update: {},
-        create: {
+    });
+
+    if (existingFollow) {
+        return NextResponse.json({
+            success: true,
+            alreadyFollowing: true,
+            unlockedAchievements: [],
+        });
+    }
+
+    await prisma.follow.create({
+        data: {
             followerId: currentUser.id,
             followingId,
         },
@@ -67,9 +78,15 @@ export async function POST(req: NextRequest) {
         "first_follow"
     );
 
+    await createActivity({
+        userId: currentUser.id,
+        type: "follow",
+        message: `${currentUser.name ?? "A developer"} followed another developer`,
+    });
+
     return NextResponse.json({ 
         success: true,
-        unlockAchievements: unlockAchievement ? [unlockAchievement] : [],
+        unlockedAchievements: unlockedAchievement ? [unlockedAchievement] : [],
     });
 }
 
@@ -83,12 +100,10 @@ export async function DELETE(req: NextRequest) {
 
     const { followingId } = await req.json();
 
-    await prisma.follow.delete({
+    await prisma.follow.deleteMany({
         where: {
-            followerId_followingId: {
                 followerId: currentUser.id,
                 followingId,
-            },
         },
     });
 

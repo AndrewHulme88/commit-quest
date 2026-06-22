@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { calculateLevel }  from "@/lib/xp";
 import { checkSyncAchievements } from "@/lib/achievements";
 import { calculateStreak } from "@/lib/streak";
+import { createActivity } from "@/lib/activity";
 
 // This route fetches the authenticated user's GitHub activity using their access token
 export async function GET(req: NextRequest) {
@@ -145,6 +146,15 @@ export async function GET(req: NextRequest) {
             lastSync: new Date(),
         },
     });
+
+    // Create activity showing that this user earned XP. This will then be shown in the activity feed
+    if (xp > 0) {
+        await createActivity({
+            userId: finalUser.id,
+            type: "xp_earned",
+            message: `${finalUser.name ?? "A developer"} earned ${xp} XP`,
+        });
+    }
 
     const unlockedAchievements = await checkSyncAchievements({
         id: finalUser.id,
