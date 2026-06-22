@@ -1,0 +1,121 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { Navbar } from "@/components/Navbar"
+import { Footer } from "@/components/Footer"
+
+export default function SettingsPage() {
+    const [name, setName] = useState("");
+    const [bio, setBio] = useState("");
+    const [isPublic, setIsPublic] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [saved, setSaved] = useState(false);
+
+    useEffect(() => {
+        async function loadSettings() {
+            const response = await fetch("/api/settings");
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+
+            setName(data.name ?? "");
+            setBio(data.bio ?? "");
+            setIsPublic(data.isPublic ?? true);
+        }
+
+        loadSettings();
+    }, []);
+
+    async function handleSubmit(event: React.FormEvent) {
+        event.preventDefault();
+
+        setSaving(true);
+        setSaved(false);
+
+        const response = await fetch("/api/settings", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                bio,
+                isPublic,
+            }),
+        });
+
+        if (response.ok) {
+            setSaved(true);
+        }
+
+        setSaving(false);
+    }
+
+    return (
+        <div className="flex min-h-screen flex-col bg-zinc-950 text-white">
+            <Navbar />
+
+            <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+                <h1 className="text-4xl font-bold">Settings</h1>
+                <p className="mt-3 text-zinc-400">
+                    Manage your profile and privacy preferences.
+                </p>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="mt-8 space-y-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6"
+                >
+                    <section>
+                        <h2 className="text-xl font-bold">Profile</h2>
+
+                        <label className="mt-5 block">
+                            <span className="text-sm text-zinc-400">Display name</span>
+                            <textarea
+                                value={bio}
+                                onChange={(event) => setBio(event.target.value)}
+                                rows={4}
+                                placeholder="Tell people a little about yourself..."
+                                className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none placeholder:text-zinc-600 focus:-border-emerald-500"
+                            />
+                        </label>
+                    </section>
+
+                    <section className="border-t border-zinc-800 pt-6">
+                        <h2 className="text-xl font-bold">Privacy</h2>
+
+                        <label className="mt-5 flex items-center justify-between gap-4 rounded-xl border border-zinc-800 bg-zinc-950 p-4">
+                            <div>
+                                <p className="font-semibold">Public profile</p>
+                                <p className="text-sm text-zinc-400">
+                                    Show your profile in search, leaderboards, and public pages.
+                                </p>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                checked={isPublic}
+                                onChange={(event) => setIsPublic(event.target.checked)}
+                                className="h-5 w-5"
+                            />
+                        </label>
+                    </section>
+
+                    <div className="flex items-center gap-4">
+                        <button
+                            type="submit"
+                            disabled={saving}
+                            className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-emerald-400 disabled:opacity-50"
+                        >
+                            {saving ? "Saving..." : "Save changes"}
+                        </button>
+
+                        {saved && <p className="text-sm text-emerald-400">Saved</p>}
+                    </div>
+                </form>
+            </main>
+
+            <Footer />
+        </div>
+    )
+}

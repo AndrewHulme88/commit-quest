@@ -17,7 +17,7 @@ async function getCurrentUser(req: NextRequest) {
     if (!githubId) return null;
 
     return prisma.user.findUnique({
-        where: { githubId },
+        where: { githubId, isPublic: true },
     });
 }
 

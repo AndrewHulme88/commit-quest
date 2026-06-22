@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
                 contains: query,
                 mode: "insensitive",
             },
+            isPublic: true,
         },
 
         take: 10,

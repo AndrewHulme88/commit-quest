@@ -61,6 +61,17 @@ export function Navbar() {
                     ) : (
                         null
                     )}
+
+                    {session?.user? (
+                        <Link
+                            href="/settings"
+                            className="rounded-lg px-4 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-900"
+                        >
+                            Settings
+                        </Link>
+                    ) : (
+                        null
+                    )}
                 </div>
 
                 <div className="flex items-center gap-5">
