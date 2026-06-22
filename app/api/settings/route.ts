@@ -37,6 +37,13 @@ export async function PATCH(req: NextRequest) {
     }
 
     const { name, bio, isPublic } = await req.json();
+
+    if (bio && bio.length > 200) {
+        return NextResponse.json(
+            { error: "Bio must be 200 characters or less"},
+            { status: 400 }
+        );
+    }
     
     const updatedUser = await prisma.user.update({
         where: { id: user.id },

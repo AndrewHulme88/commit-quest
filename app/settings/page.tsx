@@ -74,10 +74,15 @@ export default function SettingsPage() {
                             <textarea
                                 value={bio}
                                 onChange={(event) => setBio(event.target.value)}
+                                maxLength={200}
                                 rows={4}
                                 placeholder="Tell people a little about yourself..."
                                 className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-white outline-none placeholder:text-zinc-600 focus:-border-emerald-500"
                             />
+
+                            <p className="mt-1 text-right text-xs text-zinc-500">
+                                {bio.length}/200
+                            </p>
                         </label>
                     </section>
 

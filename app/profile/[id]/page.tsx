@@ -73,7 +73,7 @@ export default function ProfilePage() {
                                     {profile.name ?? "Unknown User"}
                                 </h1>
                                 {profile.bio && (
-                                    <p className="mt-3 max-w-xl text-zinc-300">
+                                    <p className="mt-3 max-w-xl whitespace-pre-wrap break-words text-zinc-300">
                                         {profile.bio}
                                     </p>
                                 )}
