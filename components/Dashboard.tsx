@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getXpForNextLevel } from "@/lib/xp";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { ActivityFeed } from "./ActivityFeed";
 import { toast } from "sonner";
 
 type SyncResult = {
@@ -222,6 +223,10 @@ export function Dashboard() {
                                 No new commits since your last sync. Keep building to earn XP!
                             </p>
                         )}
+                    </section>
+
+                    <section className="mt-6">
+                        <ActivityFeed />
                     </section>
 
                     <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
