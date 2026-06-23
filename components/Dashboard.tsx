@@ -127,6 +127,9 @@ export function Dashboard() {
                 <Navbar />
 
                 <div className="mx-auto max-w-6xl px-6 py-10">
+                    <p className="mb-4 font-medium text-emerald-400">
+                        Commit Quest is in early access. Your feedback helps shape future features and improvements.
+                    </p>
                     <section className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 shadow-xl">
                         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-center gap-5">
