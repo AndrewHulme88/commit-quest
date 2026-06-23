@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { FeedbackLink } from "./FeedbackLink";
 
 export function Navbar() {
     const { data: session } = useSession();
@@ -69,6 +70,12 @@ export function Navbar() {
                         >
                             Settings
                         </Link>
+                    ) : (
+                        null
+                    )}
+
+                    {session?.user? (
+                        <FeedbackLink />
                     ) : (
                         null
                     )}
