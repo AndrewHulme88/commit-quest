@@ -61,3 +61,17 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json(updatedUser);
 }
+
+export async function DELETE(req: NextRequest) {
+    const user = await getCurrentUser(req);
+
+    if (!user) {
+        return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    await prisma.user.delete({
+        where: { id: user.id },
+    });
+
+    return NextResponse.json({ success: true });
+}

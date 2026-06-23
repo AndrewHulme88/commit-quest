@@ -52,6 +52,22 @@ export default function SettingsPage() {
         setSaving(false);
     }
 
+    async function handleDeleteAccount() {
+        const confirmed = confirm(
+            "Are you sure? This will permanently delete your account and all progress!"
+        );
+
+        if (!confirmed) return;
+
+        const response = await fetch("/api/settings", {
+            method: "DELETE",
+        });
+
+        if (response.ok) {
+            window.location.href = "/";
+        }
+    }
+
     return (
         <div className="flex min-h-screen flex-col bg-zinc-950 text-white">
             <Navbar />
@@ -118,6 +134,22 @@ export default function SettingsPage() {
                         {saved && <p className="text-sm text-emerald-400">Saved</p>}
                     </div>
                 </form>
+
+                <section className="border-t border-zinc-800 pt-6">
+                    <h2 className="text-xl font-bold text-red-400">Danger Zone</h2>
+
+                    <p className="mt-2 text-sm text-zinc-400">
+                        Permanently delete your account, XP, streaks, achievements, followers, and actitvity.
+                    </p>
+
+                    <button
+                        type="button"
+                        onClick={handleDeleteAccount}
+                        className="mt-4 rounded-xl bg-red-600 px-5 py-3 font-semibold text-white hover:bg-red-500"
+                    >
+                        Delete Account
+                    </button>
+                </section>
             </main>
 
             <Footer />
