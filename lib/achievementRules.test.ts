@@ -60,6 +60,6 @@ describe("Achievement rules", () => {
                 level: 5,
                 streak: 3,
             })
-        ).toEqual(["first_xp", "xp_100", "level_5", "streak_3"]);
+        ).toEqual(["first_xp", "xp_100", "xp_500", "xp_1000", "level_5", "streak_3"]);
     });
 });
