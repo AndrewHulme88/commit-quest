@@ -29,10 +29,11 @@ export async function GET(req: NextRequest) {
         },
     });
 
-    const visibleUserIds = [
-        currentUser.id,
-        ...follows.map((follow) => follow.followingId),
-    ];
+    const visibleUserIds = follows.map((follow) => follow.followingId);
+
+    if (visibleUserIds.length === 0) {
+        return NextResponse.json([]);
+    }
 
     const activities = await prisma.activity.findMany({
         where: {

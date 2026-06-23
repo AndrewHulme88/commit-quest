@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
+import { signOut } from "next-auth/react"
 
 export default function SettingsPage() {
     const [name, setName] = useState("");
@@ -64,7 +65,7 @@ export default function SettingsPage() {
         });
 
         if (response.ok) {
-            window.location.href = "/";
+            await signOut({ callbackUrl: "/" });
         }
     }
 
