@@ -23,6 +23,63 @@ async function getCurrentUser(req: NextRequest) {
     });
 }
 
+// Function to handle unlocking following and follower related achievements
+async function checkFollowAchievements(currentUserId: string, followedUserId: string) {
+    const unlockedAchievements = [];
+
+    const followingCount = await prisma.follow.count({
+        where: {
+            followerId: currentUserId,
+        },
+    });
+
+    const followerCount = await prisma.follow.count({
+        where: {
+            followingId: followedUserId,
+        },
+    });
+
+    // Following achievements
+    if (followingCount >= 1) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "first_follow")
+        );
+    }
+
+    if (followingCount >= 5) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "following_5")
+        );
+    }
+
+    if (followingCount >= 10) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "following_10")
+        );
+    }
+
+    // Followers achievements
+    if (followerCount >= 1) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "followers_1")
+        );
+    }
+
+    if (followerCount >= 5) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "followers_5")
+        );
+    }
+
+    if (followerCount >= 10) {
+        unlockedAchievements.push(
+            await unlockAchievement(currentUserId, "followers_10")
+        );
+    }
+
+    return unlockedAchievements.filter(Boolean);
+}
+
 // This function handles both following and unfollowing a user based on the HTTP method
 export async function POST(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -73,9 +130,9 @@ export async function POST(req: NextRequest) {
         },
     });
 
-    const unlockedAchievement = await unlockAchievement(
+    const unlockedAchievements = await checkFollowAchievements(
         currentUser.id, 
-        "first_follow"
+        followingId
     );
 
     await createActivity({
@@ -86,7 +143,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ 
         success: true,
-        unlockedAchievements: unlockedAchievement ? [unlockedAchievement] : [],
+        unlockedAchievements,
     });
 }
 
