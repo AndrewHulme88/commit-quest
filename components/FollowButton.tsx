@@ -65,7 +65,7 @@ export function FollowButton({ userId }: Props) {
         <button
             onClick={toggleFollow}
             disabled={loading}
-            className="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 disabled:opacity-50"
+            className={`rounded-full px-4 py-2 text-sm font-medium transition disabled:opacity-50 ${isFollowing ? "border border-zinc-300 bg-white text-zinc-600 hover:bg-zinc-50" : "bg-zinc-900 text-white hover:bg-zinc-800"}`}
             >
                 {loading ? "Loading..." : isFollowing ? "Unfollow" : "Follow"}
         </button>

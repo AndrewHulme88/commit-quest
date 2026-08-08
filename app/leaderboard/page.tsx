@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Navbar } from "@/components/Navbar";
@@ -21,13 +21,13 @@ export default function LeaderboardPage() {
     if (!session) return null;
     
     return (
-        <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
-            <main className="flex-1 bg-zinc-950 text-white">
+        <div className="min-h-screen flex flex-col bg-[#f7f8fa] text-zinc-900">
+            <main className="flex-1 bg-[#f7f8fa] text-zinc-900">
                 <Navbar />
 
                 <section className="mx-auto max-w-5xl px-6 py-10">
                     <h1 className="text-4xl font-bold">Leaderboards</h1>
-                    <p className="mt-3 text-zinc-400">
+                    <p className="mt-3 text-zinc-500">
                         See how you stack up against other developers!
                     </p>
 

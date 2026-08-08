@@ -39,12 +39,12 @@ export default function SearchPage() {
     }
 
     return (
-        <div className="flex min-h-screen flex-col bg-zinc-950 text-white">
+        <div className="flex min-h-screen flex-col bg-[#f7f8fa] text-zinc-900">
             <Navbar />
 
             <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
                 <h1 className="text-4xl font-bold">Search Developers</h1>
-                <p className="mt-3 text-zinc-400">
+                <p className="mt-3 text-zinc-500">
                     Find other developers, view their profile, and follow their progress.
                 </p>
 
@@ -53,22 +53,22 @@ export default function SearchPage() {
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
                         placeholder="Search by name..."
-                        className="flex-1 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-white outline-none placeholder:text-zinc-500 focus:border-emerald-500"
+                        className="flex-1 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 shadow-sm outline-none placeholder:text-zinc-400 focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
                     />
 
                     <button
                         type="submit"
-                        className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-emerald-400"
+                        className="rounded-full bg-zinc-900 px-6 py-3 font-semibold text-white hover:bg-zinc-800"
                     >
                         Search
                     </button>
                 </form>
 
                 <section className="mt-8 space-y-4">
-                    {loading && <p className="text-zinc-400">Searching...</p>}
+                    {loading && <p className="text-zinc-500">Searching...</p>}
 
                     {!loading && users.length === 0 && query && (
-                        <p className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 text-zinc-400">
+                        <p className="rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-500">
                             No users found.
                         </p>
                     )}
@@ -76,7 +76,7 @@ export default function SearchPage() {
                     {users.map((user) => (
                         <div
                             key={user.id}
-                            className="flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 sm:flex-row sm:items-center sm:fustify-between"
+                            className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
                         >
                             <div className="flex items-center gap-4">
                                 {user.image && (
@@ -91,7 +91,7 @@ export default function SearchPage() {
 
                                 <div>
                                     <p className="font-semibold">{user.name ?? "Unknown User"}</p>
-                                    <p className="text-sm text-zinc-400">
+                                    <p className="text-sm text-zinc-500">
                                         Level {user.level} - {user.xp} XP - {user.streak} day streak
                                     </p>
                                 </div>

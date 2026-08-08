@@ -48,11 +48,11 @@ export default function ProfilePage() {
     if(!profile) return null;
 
     return (
-        <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
+        <div className="min-h-screen flex flex-col bg-[#f7f8fa] text-zinc-900">
             <Navbar />
             
             <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
-                <section className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8">
+                <section className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
                     <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-5">
                             {profile.image && (
@@ -66,18 +66,18 @@ export default function ProfilePage() {
                             )}
 
                             <div>
-                                <p className="text-sm font-medium text-emerald-400">
+                                <p className="text-sm font-medium text-[#137a68]">
                                     Developer Profile
                                 </p>
                                 <h1 className="mt-2 text-4xl font-bold">
                                     {profile.name ?? "Unknown User"}
                                 </h1>
                                 {profile.bio && (
-                                    <p className="mt-3 max-w-xl whitespace-pre-wrap break-words text-zinc-300">
+                                    <p className="mt-3 max-w-xl whitespace-pre-wrap break-words text-zinc-700">
                                         {profile.bio}
                                     </p>
                                 )}
-                                <p className="mt-2 text-zinc-400">
+                                <p className="mt-2 text-zinc-500">
                                     Level {profile.level} - {profile.xp} XP
                                 </p>
                             </div>
@@ -99,11 +99,11 @@ export default function ProfilePage() {
                     <StatCard label="Following" value={profile.following_count} />
                 </section>
 
-                <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+                <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6">
                     <h2 className="text-2xl font-bold">Achievements</h2>
 
                     {profile.achievements.length === 0 ? (
-                        <p className="mt-4 text-zinc-400">
+                        <p className="mt-4 text-zinc-500">
                             No achievements unlocked yet.
                         </p>
                     ) : (
@@ -111,11 +111,11 @@ export default function ProfilePage() {
                             {profile.achievements.map((achievement) => (
                                 <div
                                     key={achievement.id}
-                                    className="rounded-xl border border-zinc-800 bg-zinc-800 p-4"
+                                    className="rounded-xl border border-zinc-200 bg-zinc-50 p-4"
                                 >
                                     <p className="text-3xl">{achievement.icon}</p>
                                     <p className="mt-2 font-bold">{achievement.name}</p>
-                                    <p className="text-sm text-zinc-400">{achievement.description}</p>
+                                    <p className="text-sm text-zinc-500">{achievement.description}</p>
                                 </div>
                             ))}
                         </div>
@@ -137,8 +137,8 @@ function StatCard({
     value: string | number;
 }) {
     return (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-            <p className="text-sm text-zinc-400">{label}</p>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <p className="text-sm text-zinc-500">{label}</p>
             <p className="mt-2 text-3xl font-bold">{value}</p>
         </div>
     );

@@ -26,23 +26,23 @@ export default function SocialPage() {
     if (!session) return null;
 
     return (
-                <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
-                    <main className="flex-1 bg-zinc-950 text-white">
+                <div className="min-h-screen flex flex-col bg-[#f7f8fa] text-zinc-900">
+                    <main className="flex-1 bg-[#f7f8fa] text-zinc-900">
                         <Navbar />
         
                         <section className="mx-auto max-w-5xl px-6 py-10">
                             <h1 className="text-4xl font-bold">Social</h1>
-                            <p className="mt-3 text-zinc-400">
+                            <p className="mt-3 text-zinc-500">
                                 Follow other developers to keep up with their progress.
                             </p>
                             
-                            <div className="mt-8 flex gap-2">
+                            <div className="mt-8 inline-flex rounded-full bg-zinc-200/60 p-1">
                                 <button
                                     onClick={() => setActiveTab("following")}
-                                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                                    className={`rounded-full px-5 py-2 text-sm font-medium transition ${
                                         activeTab === "following"
-                                            ? "bg-emerald-500 text-zinc-950"
-                                            : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                                            ? "bg-white text-zinc-950 shadow-sm"
+                                            : "text-zinc-500 hover:text-zinc-900"
                                     }`}
                                 >
                                     Following
@@ -50,10 +50,10 @@ export default function SocialPage() {
 
                                 <button
                                     onClick={() => setActiveTab("followers")}
-                                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                                    className={`rounded-full px-5 py-2 text-sm font-medium transition ${
                                         activeTab === "followers"
-                                            ? "bg-emerald-500 text-zinc-950"
-                                            : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                                            ? "bg-white text-zinc-950 shadow-sm"
+                                            : "text-zinc-500 hover:text-zinc-900"
                                     }`}
                                 >
                                     Followers   

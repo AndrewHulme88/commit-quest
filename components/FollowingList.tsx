@@ -33,9 +33,9 @@ export function FollowingList() {
 
     if (followedUsers.length === 0) {
         return (
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+            <section className="rounded-2xl border border-zinc-200 bg-white p-6">
                 <h3 className="mb-3 text-xl font-bold">Following</h3>
-                <p className="rounded-2xl border border-zinc-800 bg-zinc-800 p-6 text-zinc-400">
+                <p className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 text-zinc-500">
                     You are not following anyone yet. Follow other developers to see their progress and compete on the leaderboards!
                 </p>
             </section>
@@ -43,13 +43,13 @@ export function FollowingList() {
     }
 
     return (
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+            <section className="rounded-2xl border border-zinc-200 bg-white p-6">
                 <h3 className="mb-3 text-xl font-bold">Following</h3>
                 <div className="space-y-4">
                     {followedUsers.map((followedUser) => (
                         <div
                             key={followedUser.id}
-                            className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-800 p-5"
+                            className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 p-5"
                         >
                         <div className="flex items-center gap-4">
                             {followedUser.image && (
@@ -64,7 +64,7 @@ export function FollowingList() {
 
                             <div>
                                 <p className="font-semibold">{followedUser.name ?? "Unknown User"}</p>
-                                <p className="text-sm text-zinc-400">
+                                <p className="text-sm text-zinc-500">
                                     Level {followedUser.level} - {followedUser.xp} XP - {followedUser.streak} day streak
                                 </p>
                             </div>

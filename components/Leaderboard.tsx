@@ -35,7 +35,7 @@ const scopeOptions: { label: string; value: Scope }[] = [
 // This component displays the leaderboard with sorting options and follow buttons for each user
 export function Leaderboard() {
     const [users, setUsers] = useState<LeaderboardUser[]>([]);
-    const [sort, setSort] = useState("xp");
+    const [sort, setSort] = useState<SortBy>("xp");
     const [scope, setScope] = useState<Scope>("global");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -66,61 +66,51 @@ export function Leaderboard() {
     }, [scope, sort]);
 
     return (
-        <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex flex-col gap-5 border-b border-zinc-200 p-6 md:flex-row md:items-end md:justify-between">
                 <div>
-                <h2 className="text-2xl font-bold">Leaderboard</h2>
-                <p className="mt-1 text-sm text-zinc-400">
+                <h2 className="text-2xl font-semibold tracking-tight">Leaderboard</h2>
+                <p className="mt-1 text-sm text-zinc-500">
                     Compare your progress with other developers.
                 </p>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div className="flex rounded-full bg-zinc-100 p-1" aria-label="Leaderboard scope">
+                        {scopeOptions.map((option) => (
+                            <button
+                                key={option.value}
+                                onClick={() => setScope(option.value)}
+                                className={`rounded-full px-4 py-2 text-sm font-medium transition ${scope === option.value ? "bg-white text-zinc-950 shadow-sm" : "text-zinc-500 hover:text-zinc-900"}`}
+                            >
+                                {option.label}
+                            </button>
+                        ))}
+                    </div>
+                    <label className="relative">
+                        <span className="sr-only">Sort leaderboard</span>
+                        <select
+                            value={sort}
+                            onChange={(event) => setSort(event.target.value as SortBy)}
+                            className="h-10 appearance-none rounded-full border border-zinc-200 bg-white py-2 pl-4 pr-10 text-sm font-medium text-zinc-700 outline-none transition hover:border-zinc-300 focus:border-zinc-400"
+                        >
+                            {sortOptions.map((option) => <option key={option.value} value={option.value}>Sort by {option.label}</option>)}
+                        </select>
+                        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-zinc-400">↓</span>
+                    </label>
                 </div>
             </div>
 
             {!loading && error && (
-                <p className="rounded-xl border border-red-900/50 bg-red-950/30 p-5 text-red-300">
-                    {error}
-                </p>
+                <p className="m-6 rounded-xl border border-red-200 bg-red-50 p-5 text-red-700">{error}</p>
             )}
 
-            <div className="mt-6 flex flex-wrap gap-2">
-                {scopeOptions.map((option) => (
-                <button
-                    key={option.value}
-                    onClick={() => setScope(option.value)}
-                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                    scope === option.value
-                        ? "bg-emerald-500 text-zinc-950"
-                        : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-                    }`}
-                >
-                    {option.label}
-                </button>
-                ))}
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-                {sortOptions.map((option) => (
-                <button
-                    key={option.value}
-                    onClick={() => setSort(option.value)}
-                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                    sort === option.value
-                        ? "bg-zinc-100 text-zinc-950"
-                        : "border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-                    }`}
-                >
-                    {option.label}
-                </button>
-                ))}
-            </div>
-
-            <div className="mt-6 space-y-4">
+            <div className="divide-y divide-zinc-100">
                 {loading && (
-                <p className="text-sm text-zinc-400">Loading leaderboard...</p>
+                <p className="p-8 text-center text-sm text-zinc-500">Loading leaderboard...</p>
                 )}
 
                 {!loading && users.length === 0 && (
-                <p className="rounded-xl border border-zinc-800 bg-zinc-800 p-5 text-zinc-400">
+                <p className="p-8 text-center text-zinc-500">
                     {scope === "following"
                     ? "You are not following anyone yet."
                     : "No users found."}
@@ -131,11 +121,11 @@ export function Leaderboard() {
                 users.map((user, index) => (
                     <div
                     key={user.id}
-                    className="flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-800 p-5 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-4 px-6 py-5 transition hover:bg-zinc-50/70 sm:flex-row sm:items-center sm:justify-between"
                     >
                     <div className="flex items-center gap-4">
-                        <p className="w-8 text-lg font-bold text-zinc-500">
-                        #{index + 1}
+                        <p className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-semibold ${index < 3 ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-500"}`}>
+                        {index + 1}
                         </p>
 
                         {user.image && (
@@ -152,7 +142,7 @@ export function Leaderboard() {
                         <p className="font-semibold">
                             {user.name ?? "Unknown User"}
                         </p>
-                        <p className="text-sm text-zinc-400">
+                        <p className="text-sm text-zinc-500">
                             {sort === "weekly_xp" ? (
                                 <>
                                     {user.weeklyXp ?? 0} XP this week - Level {user.level} - {" "} {user.xp} total XP

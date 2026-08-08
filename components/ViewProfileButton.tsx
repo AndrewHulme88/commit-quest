@@ -7,8 +7,8 @@ type Props = {
 export function ViewProfileButton({userId}: Props) {
 
     return (
-        <Link href={`/profile/${userId}`} className="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800">
-            View Profile
+        <Link href={`/profile/${userId}`} className="rounded-full px-4 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950">
+            View profile
         </Link>
     );
 }

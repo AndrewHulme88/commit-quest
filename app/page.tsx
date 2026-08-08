@@ -15,33 +15,47 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-950 text-white">
-      <main className="flex-1 bg-zinc-950 text-white">
+    <div className="flex min-h-screen flex-col bg-[#f7f8fa] text-zinc-900">
+      <main className="flex-1 bg-[#f7f8fa] text-zinc-900">
         <Navbar />
 
-        <section className="mx-auto flex max-w-6xl flex-col items-center px-6 py-24 text-center">
-          <span className="mb-6 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300">
-            Gamify your GitHub progress
-          </span>
+        <section className="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
+          <div>
+            <h2 className="max-w-4xl text-5xl font-semibold leading-[1.05] tracking-[-0.05em] text-zinc-950 sm:text-6xl">
+              Make your coding habit visible.
+            </h2>
 
-          <h2 className="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-6xl">
-            Turn your GitHub activity into XP, streaks, achievements, and friendly competition.
-          </h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-600">
+              Commit Quest helps developers stay motivated by turning coding activity
+              into clear progress, shared milestones, and a little friendly competition.
+            </p>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
-            Commit Quest helps developers stay motivated by turning coding activity
-            into RPG-style progression, social leaderboards, achievements, and profiles.
-          </p>
+            <button
+              onClick={() => signIn("github")}
+              className="mt-9 rounded-full bg-zinc-900 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-zinc-800"
+            >
+              Continue with GitHub
+            </button>
+          </div>
 
-          <button
-            onClick={() => signIn("github")}
-            className="mt-10 rounded-xl bg-emerald-500 px-6 py-4 font-bold text-zinc-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-400"
-          >
-            Start your quest
-          </button>
+          <div className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-xl shadow-zinc-200/50">
+            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-7 text-zinc-950">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-zinc-500">This week</p>
+                <span className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-zinc-500 shadow-sm">Level 08</span>
+              </div>
+              <p className="mt-3 text-5xl font-semibold tracking-[-0.05em]">+840 <span className="text-2xl text-zinc-400">XP</span></p>
+              <div className="mt-8 h-2 overflow-hidden rounded-full bg-zinc-200"><div className="h-full w-2/3 rounded-full bg-[#137a68]" /></div>
+              <p className="mt-3 text-xs text-zinc-500">67% to your next level</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 pt-4">
+              <div className="rounded-2xl bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Active streak</p><p className="mt-2 text-2xl font-semibold">12 days</p></div>
+              <div className="rounded-2xl bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Level</p><p className="mt-2 text-2xl font-semibold">08</p></div>
+            </div>
+          </div>
         </section>
 
-        <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 md:grid-cols-3">
+        <section className="mx-auto grid max-w-6xl border-y border-zinc-200 px-6 py-16 md:grid-cols-3">
           <FeatureCard
             title="Earn XP"
             description="Sync your GitHub push activity and earn XP as you build."
@@ -57,36 +71,22 @@ export default function Home() {
             description="Stay consistent with daily coding streaks and personal bests."
           />
 
-          <FeatureCard
-            title="Unlock Achievements"
-            description="Earn badges for milestones like XP goals, streaks, and social actions."
-          />
-
-          <FeatureCard
-            title="Compete on Leaderboards"
-            description="Compare all-time and weekly progress globally or against people you follow."
-          />
-
-          <FeatureCard
-            title="Connect with Developers"
-            description="Follow other users, view profiles, search developers, and track activity."
-          />
         </section>
 
-        <section className="mx-auto max-w-6xl px-6 pb-24">
-          <div className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-8 text-center">
-            <h3 className="text-3xl font-bold">
+        <section className="bg-zinc-900 px-6 py-20 text-center text-white">
+          <div className="mx-auto max-w-6xl">
+            <h3 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
               Make consistency feel rewarding.
             </h3>
 
-            <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
-              Whether you're learning, building projects, or trying to stay accountable,
+            <p className="mx-auto mt-4 max-w-2xl leading-7 text-zinc-400">
+              Whether you&apos;re learning, building projects, or trying to stay accountable,
               Commit Quest gives your coding habit a sense of progress.
             </p>
 
             <button
               onClick={() => signIn("github")}
-              className="mt-8 rounded-xl bg-emerald-500 px-6 py-3 font-bold text-zinc-950 hover:bg-emerald-400"
+              className="mt-8 rounded-full bg-white px-6 py-3 font-semibold text-zinc-950 transition hover:bg-zinc-100"
             >
               Sign in with GitHub
             </button>
@@ -107,9 +107,9 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-      <p className="text-2xl font-bold">{title}</p>
-      <p className="mt-3 text-zinc-400">{description}</p>
+    <div className="border-b border-zinc-200 py-6 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0">
+      <p className="text-xl font-semibold">{title}</p>
+      <p className="mt-3 text-zinc-500">{description}</p>
     </div>
   );
 }

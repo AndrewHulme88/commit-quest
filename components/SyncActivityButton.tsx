@@ -32,7 +32,7 @@ export function SyncActivityButton({ onSyncComplete }: Props) {
             <button
                 onClick={handleSync}
                 disabled={loading}
-                className="rounded bg-green-600 px-4 py-2 text-white disabled:opacity-50"
+                className="rounded-full bg-zinc-900 px-5 py-2.5 font-medium text-white transition hover:bg-zinc-800 disabled:opacity-50"
             >
                 {loading ? "Syncing..." : "Sync GitHub Activity"}
             </button>
