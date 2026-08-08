@@ -18,7 +18,7 @@ export function SocialList() {
     const followedUsers: FollowedUser[] = [];
 
     return (
-        <section className="rounded-2xl border border-zinc-200 bg-white p-6">
+        <section className="rounded-lg border border-zinc-200 bg-white p-6">
             <h2 className="mb-6 text-2xl font-bold">Following</h2>
 
             <div className="space-y-4">

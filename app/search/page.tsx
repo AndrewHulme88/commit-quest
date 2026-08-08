@@ -53,12 +53,12 @@ export default function SearchPage() {
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
                         placeholder="Search by name..."
-                        className="flex-1 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 shadow-sm outline-none placeholder:text-zinc-400 focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
+                        className="flex-1 rounded-lg border border-zinc-200 bg-white px-4 py-3 text-zinc-900 shadow-sm outline-none placeholder:text-zinc-400 focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
                     />
 
                     <button
                         type="submit"
-                        className="rounded-full bg-zinc-900 px-6 py-3 font-semibold text-white hover:bg-zinc-800"
+                        className="rounded-md bg-zinc-900 px-6 py-3 font-semibold text-white hover:bg-zinc-800"
                     >
                         Search
                     </button>
@@ -68,7 +68,7 @@ export default function SearchPage() {
                     {loading && <p className="text-zinc-500">Searching...</p>}
 
                     {!loading && users.length === 0 && query && (
-                        <p className="rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-500">
+                        <p className="rounded-lg border border-zinc-200 bg-white p-6 text-zinc-500">
                             No users found.
                         </p>
                     )}
@@ -76,7 +76,7 @@ export default function SearchPage() {
                     {users.map((user) => (
                         <div
                             key={user.id}
-                            className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+                            className="flex flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
                         >
                             <div className="flex items-center gap-4">
                                 {user.image && (

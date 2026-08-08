@@ -66,7 +66,7 @@ export function Leaderboard() {
     }, [scope, sort]);
 
     return (
-        <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
             <div className="flex flex-col gap-5 border-b border-zinc-200 p-6 md:flex-row md:items-end md:justify-between">
                 <div>
                 <h2 className="text-2xl font-semibold tracking-tight">Leaderboard</h2>
@@ -75,12 +75,12 @@ export function Leaderboard() {
                 </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <div className="flex rounded-full bg-zinc-100 p-1" aria-label="Leaderboard scope">
+                    <div className="flex rounded-md bg-zinc-100 p-1" aria-label="Leaderboard scope">
                         {scopeOptions.map((option) => (
                             <button
                                 key={option.value}
                                 onClick={() => setScope(option.value)}
-                                className={`rounded-full px-4 py-2 text-sm font-medium transition ${scope === option.value ? "bg-white text-zinc-950 shadow-sm" : "text-zinc-500 hover:text-zinc-900"}`}
+                                className={`rounded-sm px-4 py-2 text-sm font-medium transition ${scope === option.value ? "bg-white text-zinc-950 shadow-sm" : "text-zinc-500 hover:text-zinc-900"}`}
                             >
                                 {option.label}
                             </button>
@@ -91,7 +91,7 @@ export function Leaderboard() {
                         <select
                             value={sort}
                             onChange={(event) => setSort(event.target.value as SortBy)}
-                            className="h-10 appearance-none rounded-full border border-zinc-200 bg-white py-2 pl-4 pr-10 text-sm font-medium text-zinc-700 outline-none transition hover:border-zinc-300 focus:border-zinc-400"
+                            className="h-10 appearance-none rounded-md border border-zinc-200 bg-white py-2 pl-4 pr-10 text-sm font-medium text-zinc-700 outline-none transition hover:border-zinc-300 focus:border-zinc-400"
                         >
                             {sortOptions.map((option) => <option key={option.value} value={option.value}>Sort by {option.label}</option>)}
                         </select>
@@ -101,7 +101,7 @@ export function Leaderboard() {
             </div>
 
             {!loading && error && (
-                <p className="m-6 rounded-xl border border-red-200 bg-red-50 p-5 text-red-700">{error}</p>
+                <p className="m-6 rounded-lg border border-red-200 bg-red-50 p-5 text-red-700">{error}</p>
             )}
 
             <div className="divide-y divide-zinc-100">

@@ -81,7 +81,7 @@ export default function SettingsPage() {
 
                 <form
                     onSubmit={handleSubmit}
-                    className="mt-8 space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
+                    className="mt-8 space-y-6 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
                 >
                     <section>
                         <h2 className="text-xl font-bold">Profile</h2>
@@ -92,7 +92,7 @@ export default function SettingsPage() {
                                 value={name}
                                 onChange={(event) => setName(event.target.value)}
                                 maxLength={80}
-                                className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
+                                className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none transition focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
                             />
                         </label>
 
@@ -104,7 +104,7 @@ export default function SettingsPage() {
                                 maxLength={200}
                                 rows={4}
                                 placeholder="Tell people a little about yourself..."
-                                className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none placeholder:text-zinc-400 focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
+                                className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-zinc-900 outline-none placeholder:text-zinc-400 focus:border-[#96cabc] focus:ring-4 focus:ring-[#eef8f5]"
                             />
 
                             <p className="mt-1 text-right text-xs text-zinc-400">
@@ -116,7 +116,7 @@ export default function SettingsPage() {
                     <section className="border-t border-zinc-200 pt-6">
                         <h2 className="text-xl font-bold">Privacy</h2>
 
-                        <label className="mt-5 flex items-center justify-between gap-4 rounded-xl border border-zinc-200 bg-[#f7f8fa] p-4">
+                        <label className="mt-5 flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-[#f7f8fa] p-4">
                             <div>
                                 <p className="font-semibold">Public profile</p>
                                 <p className="text-sm text-zinc-500">
@@ -138,7 +138,7 @@ export default function SettingsPage() {
                         <button
                             type="submit"
                             disabled={saving}
-                            className="rounded-full bg-zinc-900 px-6 py-3 font-semibold text-white hover:bg-zinc-800 disabled:opacity-50"
+                            className="rounded-md bg-zinc-900 px-6 py-3 font-semibold text-white hover:bg-zinc-800 disabled:opacity-50"
                         >
                             {saving ? "Saving..." : "Save changes"}
                         </button>
@@ -147,7 +147,7 @@ export default function SettingsPage() {
                     </div>
                 </form>
 
-                <section className="mt-10 rounded-2xl border border-red-200 bg-red-50 p-6">
+                <section className="mt-10 rounded-lg border border-red-200 bg-red-50 p-6">
                     <h2 className="text-xl font-bold text-red-400">Danger Zone</h2>
 
                     <p className="mt-2 text-sm text-zinc-500">
@@ -157,7 +157,7 @@ export default function SettingsPage() {
                     <button
                         type="button"
                         onClick={handleDeleteAccount}
-                        className="mt-4 rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+                        className="mt-4 rounded-md bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
                     >
                         Delete Account
                     </button>

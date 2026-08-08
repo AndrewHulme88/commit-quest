@@ -32,25 +32,25 @@ export default function Home() {
 
             <button
               onClick={() => signIn("github")}
-              className="mt-9 rounded-full bg-zinc-900 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-zinc-800"
+              className="mt-9 rounded-md bg-zinc-900 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-zinc-800"
             >
               Continue with GitHub
             </button>
           </div>
 
-          <div className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-xl shadow-zinc-200/50">
-            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-7 text-zinc-950">
+          <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-xl shadow-zinc-200/50">
+            <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-7 text-zinc-950">
               <div className="flex items-center justify-between">
                 <p className="text-sm text-zinc-500">This week</p>
-                <span className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-zinc-500 shadow-sm">Level 08</span>
+                <span className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-zinc-500 shadow-sm">Level 08</span>
               </div>
               <p className="mt-3 text-5xl font-semibold tracking-[-0.05em]">+840 <span className="text-2xl text-zinc-400">XP</span></p>
               <div className="mt-8 h-2 overflow-hidden rounded-full bg-zinc-200"><div className="h-full w-2/3 rounded-full bg-[#137a68]" /></div>
               <p className="mt-3 text-xs text-zinc-500">67% to your next level</p>
             </div>
             <div className="grid grid-cols-2 gap-3 pt-4">
-              <div className="rounded-2xl bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Active streak</p><p className="mt-2 text-2xl font-semibold">12 days</p></div>
-              <div className="rounded-2xl bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Level</p><p className="mt-2 text-2xl font-semibold">08</p></div>
+              <div className="rounded-lg bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Active streak</p><p className="mt-2 text-2xl font-semibold">12 days</p></div>
+              <div className="rounded-lg bg-zinc-50 p-5"><p className="text-sm text-zinc-500">Level</p><p className="mt-2 text-2xl font-semibold">08</p></div>
             </div>
           </div>
         </section>
@@ -86,7 +86,7 @@ export default function Home() {
 
             <button
               onClick={() => signIn("github")}
-              className="mt-8 rounded-full bg-white px-6 py-3 font-semibold text-zinc-950 transition hover:bg-zinc-100"
+              className="mt-8 rounded-md bg-white px-6 py-3 font-semibold text-zinc-950 transition hover:bg-zinc-100"
             >
               Sign in with GitHub
             </button>

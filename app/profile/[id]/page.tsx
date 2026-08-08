@@ -52,7 +52,7 @@ export default function ProfilePage() {
             <Navbar />
             
             <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
-                <section className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
+                <section className="rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
                     <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-5">
                             {profile.image && (
@@ -99,7 +99,7 @@ export default function ProfilePage() {
                     <StatCard label="Following" value={profile.following_count} />
                 </section>
 
-                <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6">
+                <section className="mt-6 rounded-lg border border-zinc-200 bg-white p-6">
                     <h2 className="text-2xl font-bold">Achievements</h2>
 
                     {profile.achievements.length === 0 ? (
@@ -111,7 +111,7 @@ export default function ProfilePage() {
                             {profile.achievements.map((achievement) => (
                                 <div
                                     key={achievement.id}
-                                    className="rounded-xl border border-zinc-200 bg-zinc-50 p-4"
+                                    className="rounded-lg border border-zinc-200 bg-zinc-50 p-4"
                                 >
                                     <p className="text-3xl">{achievement.icon}</p>
                                     <p className="mt-2 font-bold">{achievement.name}</p>
@@ -137,7 +137,7 @@ function StatCard({
     value: string | number;
 }) {
     return (
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
             <p className="text-sm text-zinc-500">{label}</p>
             <p className="mt-2 text-3xl font-bold">{value}</p>
         </div>

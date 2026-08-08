@@ -95,14 +95,14 @@ export function Navbar() {
                     {session?.user ? (
                         <button
                             onClick={() => signOut({ callbackUrl: "/" })}
-                            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
+                            className="rounded-md border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
                             >
                             Sign out
                         </button>
                     ) : (
                         <button
                             onClick={() => signIn("github")}
-                            className="rounded-full bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition hover:bg-zinc-800"
+                            className="rounded-md bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition hover:bg-zinc-800"
                             >
                             Sign in
                         </button>

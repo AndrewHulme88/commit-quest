@@ -36,10 +36,10 @@ export default function SocialPage() {
                                 Follow other developers to keep up with their progress.
                             </p>
                             
-                            <div className="mt-8 inline-flex rounded-full bg-zinc-200/60 p-1">
+                            <div className="mt-8 inline-flex rounded-md bg-zinc-200/60 p-1">
                                 <button
                                     onClick={() => setActiveTab("following")}
-                                    className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+                                    className={`rounded-sm px-5 py-2 text-sm font-medium transition ${
                                         activeTab === "following"
                                             ? "bg-white text-zinc-950 shadow-sm"
                                             : "text-zinc-500 hover:text-zinc-900"
@@ -50,7 +50,7 @@ export default function SocialPage() {
 
                                 <button
                                     onClick={() => setActiveTab("followers")}
-                                    className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+                                    className={`rounded-sm px-5 py-2 text-sm font-medium transition ${
                                         activeTab === "followers"
                                             ? "bg-white text-zinc-950 shadow-sm"
                                             : "text-zinc-500 hover:text-zinc-900"

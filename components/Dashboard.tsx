@@ -140,11 +140,9 @@ export function Dashboard() {
                     <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <div className="mb-3 flex items-center gap-2 text-sm font-medium text-[#137a68]">
-                                <span className="size-1.5 rounded-full bg-[#137a68] " />
-                                Your weekly progress
                             </div>
                             <h1 className="max-w-3xl text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">
-                                Keep the momentum, <span className="text-zinc-400">{firstName}.</span>
+                                Keep up the momentum <br></br><span className="text-zinc-500">{firstName}.</span>
                             </h1>
                         </div>
                         <p className="max-w-xs text-sm leading-6 text-zinc-500">
@@ -152,7 +150,7 @@ export function Dashboard() {
                         </p>
                     </div>
 
-                    <section className="grid overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-2 shadow-[0_20px_60px_rgba(24,24,27,0.06)] lg:grid-cols-[1.35fr_0.65fr]" aria-label="Level overview">
+                    <section className="grid overflow-hidden rounded-lg border border-zinc-200 bg-white p-2 shadow-[0_20px_60px_rgba(24,24,27,0.06)] lg:grid-cols-[1.35fr_0.65fr]" aria-label="Level overview">
                         <div className="relative p-6 sm:p-9">
                             <div className="flex items-center gap-4">
                                 {session.user.image && (
@@ -184,11 +182,11 @@ export function Dashboard() {
                             </div>
                         </div>
 
-                        <div className="flex min-h-56 items-center justify-center rounded-[1.5rem] border border-zinc-200 bg-zinc-50 p-8 text-zinc-950">
+                        <div className="flex min-h-56 items-center justify-center rounded-lg bg-zinc-100 p-8 text-zinc-950">
                             <div className="text-center">
-                                <p className="text-sm font-medium text-[#137a68]">Current level</p>
+                                <p className="text-2xl font-medium text-zinc-500">Current level</p>
                                 <p className="mt-2 text-[7rem] font-semibold leading-none tracking-[-0.1em]">{userStats.level}</p>
-                                <p className="mt-3 text-xs text-zinc-500">Next level at {nextLevelXp.toLocaleString()} XP</p>
+                                <p className="mt-3 text-sm text-zinc-500">Next level at {nextLevelXp.toLocaleString()} XP</p>
                             </div>
                         </div>
                     </section>
@@ -207,7 +205,7 @@ export function Dashboard() {
                             <section>
                                 <div className="flex items-center justify-between border-b border-zinc-700 pb-4">
                                     <div>
-                                        <p className="text-xs font-semibold text-emerald-300">Personal best</p>
+                                        <p className="text-xs font-semibold text-zinc-400">Personal best</p>
                                         <h2 className="mt-1 text-xl font-medium tracking-tight">Longest streak</h2>
                                     </div>
                                     <p className="font-mono text-3xl tracking-[-0.08em]">{String(userStats.highest_streak).padStart(2, "0")}<span className="ml-2 text-xs tracking-normal text-zinc-500">DAYS</span></p>
@@ -219,7 +217,7 @@ export function Dashboard() {
                                 </div>
                             </section>
 
-                            <section className="rounded-2xl border border-zinc-200 bg-white p-6 text-zinc-900 shadow-sm">
+                            <section className="rounded-lg border border-zinc-200 bg-white p-6 text-zinc-900 shadow-sm">
                                 <div className="flex items-center gap-3">
                                     <span className={`size-2 rounded-full ${syncing ? "animate-pulse bg-amber-300" : "bg-[#137a68]"}`} />
                                     <h2 className="text-sm font-semibold">Latest sync</h2>
@@ -246,11 +244,10 @@ export function Dashboard() {
                         </div>
 
                         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                            {achievements.map((achievement, index) => (
-                                <article key={achievement.id} className="group min-h-44 rounded-2xl border border-zinc-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md">
+                            {achievements.map((achievement) => (
+                                <article key={achievement.id} className="group min-h-44 rounded-lg border border-zinc-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md">
                                     <div className="flex items-start justify-between">
                                         <span className="text-3xl ">{achievement.icon}</span>
-                                        <span className="font-mono text-[10px] text-zinc-400">A—{String(index + 1).padStart(2, "0")}</span>
                                     </div>
                                     <h3 className="mt-7 font-medium">{achievement.name}</h3>
                                     <p className="mt-2 text-sm leading-5 text-zinc-500">{achievement.description}</p>
@@ -269,7 +266,7 @@ export function Dashboard() {
 
 function Metric({ label, value, suffix, icon, status }: { label: string; value: string; suffix?: string; icon: "xp" | "streak" | "sync"; status?: boolean }) {
     return (
-        <div className="flex min-h-36 flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+        <div className="flex min-h-36 flex-col justify-between rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
             <div className="flex items-center justify-between text-zinc-400">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em]">{label}</p>
                 <StatIcon type={icon} />

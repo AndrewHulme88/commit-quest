@@ -37,19 +37,19 @@ export function ActivityFeed() {
     }, []);
 
     return (
-        <section className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <section className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
             <div className="flex items-end justify-between border-b border-zinc-200 pb-4">
                 <div>
                     <p className="text-xs font-semibold text-[#137a68]">Community</p>
                     <h2 className="mt-1 text-2xl font-medium tracking-tight">Recent activity</h2>
                 </div>
-                <span className="rounded-full bg-[#eef8f5] px-2.5 py-1 text-xs font-medium text-[#115f53]">Live feed</span>
+                <span className="rounded-md bg-[#eef8f5] px-2.5 py-1 text-xs font-medium text-[#115f53]">Live feed</span>
             </div>
 
             {loading && (
                 <div className="space-y-1 py-2" aria-label="Loading activity">
                     {[0, 1, 2].map((item) => (
-                        <div key={item} className="h-20 animate-pulse rounded-xl bg-zinc-100" />
+                        <div key={item} className="h-20 animate-pulse rounded-lg bg-zinc-100" />
                     ))}
                 </div>
             )}
