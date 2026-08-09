@@ -40,7 +40,6 @@ export function ActivityFeed() {
         <section className="text-white">
             <div className="flex items-end justify-between border-b border-zinc-700 pb-4">
                 <div>
-                    <p className="text-xs font-semibold text-[#67c3ae]">Community</p>
                     <h2 className="mt-1 text-2xl font-medium tracking-tight">Recent activity</h2>
                 </div>
                 <span className="rounded-md border border-zinc-700 px-2.5 py-1 text-xs font-medium text-zinc-400">Live feed</span>

@@ -189,7 +189,6 @@ export function Dashboard() {
                             <section>
                                 <div className="flex items-center justify-between border-b border-zinc-700 pb-4">
                                     <div>
-                                        <p className="text-xs font-semibold text-zinc-400">Personal best</p>
                                         <h2 className="mt-1 text-xl font-medium tracking-tight">Longest streak</h2>
                                     </div>
                                     <p className="font-mono text-3xl tracking-[-0.08em]">{String(userStats.highest_streak).padStart(2, "0")}<span className="ml-2 text-xs tracking-normal text-zinc-500">DAYS</span></p>
