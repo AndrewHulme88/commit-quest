@@ -64,11 +64,11 @@ export default function SearchPage() {
                     </button>
                 </form>
 
-                <section className="mt-8 space-y-4">
+                <section className="mt-10 border-t border-zinc-200">
                     {loading && <p className="text-zinc-500">Searching...</p>}
 
                     {!loading && users.length === 0 && query && (
-                        <p className="rounded-lg border border-zinc-200 bg-white p-6 text-zinc-500">
+                        <p className="py-10 text-center text-zinc-500">
                             No users found.
                         </p>
                     )}
@@ -76,7 +76,7 @@ export default function SearchPage() {
                     {users.map((user) => (
                         <div
                             key={user.id}
-                            className="flex flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+                            className="flex flex-col gap-4 border-b border-zinc-200 py-5 sm:flex-row sm:items-center sm:justify-between"
                         >
                             <div className="flex items-center gap-4">
                                 {user.image && (

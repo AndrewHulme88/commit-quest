@@ -8,6 +8,7 @@ import { getXpForNextLevel } from "@/lib/xp";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { ActivityFeed } from "./ActivityFeed";
+import { AchievementIcon } from "./AchievementIcon";
 
 type SyncResult = {
     skipped?: boolean;
@@ -46,20 +47,6 @@ type UnlockedAchievement = {
         icon: string;
     };
 };
-
-function StatIcon({ type }: { type: "xp" | "streak" | "sync" }) {
-    const paths = {
-        xp: <path d="M12 3v18M5.5 7.5 12 3l6.5 4.5M5.5 16.5 12 21l6.5-4.5M4 12h16" />,
-        streak: <path d="M13.5 2.5c.4 4-2.8 5.2-2.8 8.1 0 1.3.8 2.2 1.8 2.2 1.8 0 2.7-2.1 2.1-4 2.7 1.7 4.4 4 4.4 6.8A7 7 0 1 1 6.1 11.8c.2 2.5 1.6 3.6 2.8 3.7-1-5.7 1.8-8.2 4.6-13Z" />,
-        sync: <path d="M20 7h-5V2M4 17h5v5M19 12a7 7 0 0 0-12-5l-2 2M5 12a7 7 0 0 0 12 5l2-2" />,
-    };
-
-    return (
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="size-5">
-            {paths[type]}
-        </svg>
-    );
-}
 
 export function Dashboard() {
     const { data: session } = useSession();
@@ -145,9 +132,6 @@ export function Dashboard() {
                                 Keep up the momentum <br></br><span className="text-zinc-500">{firstName}.</span>
                             </h1>
                         </div>
-                        <p className="max-w-xs text-sm leading-6 text-zinc-500">
-                            Your GitHub activity, distilled into a record of consistency and progress.
-                        </p>
                     </div>
 
                     <section className="grid overflow-hidden rounded-lg border border-zinc-200 bg-white p-2 shadow-[0_20px_60px_rgba(24,24,27,0.06)] lg:grid-cols-[1.35fr_0.65fr]" aria-label="Level overview">
@@ -191,10 +175,10 @@ export function Dashboard() {
                         </div>
                     </section>
 
-                    <section className="mt-4 grid gap-4 sm:grid-cols-3" aria-label="Developer statistics">
-                        <Metric label="Total experience" value={userStats.totalXp.toLocaleString()} suffix="XP" icon="xp" />
-                        <Metric label="Active streak" value={userStats.streak.toString()} suffix={userStats.streak === 1 ? "DAY" : "DAYS"} icon="streak" />
-                        <Metric label="GitHub status" value={syncing ? "SYNCING" : "CURRENT"} status={!syncing} icon="sync" />
+                    <section className="mt-8 grid border-y border-zinc-200 sm:grid-cols-3" aria-label="Developer statistics">
+                        <Metric label="Total experience" value={userStats.totalXp.toLocaleString()} suffix="XP" />
+                        <Metric label="Active streak" value={userStats.streak.toString()} suffix={userStats.streak === 1 ? "DAY" : "DAYS"} />
+                        <Metric label="GitHub status" value={syncing ? "Syncing" : "Up to Date"} />
                     </section>
 
                     <div className="relative left-1/2 right-1/2 mt-16 -ml-[50vw] -mr-[50vw] w-screen bg-zinc-900 text-white">
@@ -217,12 +201,11 @@ export function Dashboard() {
                                 </div>
                             </section>
 
-                            <section className="rounded-lg border border-zinc-200 bg-white p-6 text-zinc-900 shadow-sm">
+                            <section className="border-t border-zinc-700 pt-6">
                                 <div className="flex items-center gap-3">
-                                    <span className={`size-2 rounded-full ${syncing ? "animate-pulse bg-amber-300" : "bg-[#137a68]"}`} />
                                     <h2 className="text-sm font-semibold">Latest sync</h2>
                                 </div>
-                                <p className="mt-4 text-sm leading-6 text-zinc-500">
+                                <p className="mt-4 text-sm leading-6 text-zinc-400">
                                     {syncing && "Checking your latest GitHub activity…"}
                                     {!syncing && lastSync?.skipped && "Recently synced. Check back in a few minutes."}
                                     {!syncing && lastSync && !lastSync.skipped && lastSync.xp > 0 && `+${lastSync.xp} XP logged from ${lastSync.newPushEvents} new commits.`}
@@ -235,19 +218,20 @@ export function Dashboard() {
                     </div>
 
                     <section className="mt-14">
-                        <div className="flex items-end justify-between border-b border-zinc-200 pb-4">
+                        <div className="flex items-end justify-between pb-4">
                             <div>
-                                <p className="text-xs font-semibold text-[#137a68]">Milestones</p>
-                                <h2 className="mt-1 text-2xl font-medium tracking-tight">Achievement archive</h2>
+                                <h2 className="mt-1 text-2xl font-medium tracking-tight">Achievements</h2>
                             </div>
                             <p className="font-mono text-xs text-zinc-400">{String(achievements.length).padStart(2, "0")} UNLOCKED</p>
                         </div>
 
-                        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="mt-4 grid border-t border-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
                             {achievements.map((achievement) => (
-                                <article key={achievement.id} className="group min-h-44 rounded-lg border border-zinc-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md">
+                                <article key={achievement.id} className="group min-h-40 border-b border-zinc-200 p-5 transition-colors hover:bg-white/60 sm:border-r lg:[&:nth-child(3n)]:border-r-0">
                                     <div className="flex items-start justify-between">
-                                        <span className="text-3xl ">{achievement.icon}</span>
+                                        <span className="grid size-9 place-items-center border border-zinc-200 bg-white text-[#137a68]">
+                                            <AchievementIcon name={achievement.name} />
+                                        </span>
                                     </div>
                                     <h3 className="mt-7 font-medium">{achievement.name}</h3>
                                     <p className="mt-2 text-sm leading-5 text-zinc-500">{achievement.description}</p>
@@ -264,17 +248,13 @@ export function Dashboard() {
     );
 }
 
-function Metric({ label, value, suffix, icon, status }: { label: string; value: string; suffix?: string; icon: "xp" | "streak" | "sync"; status?: boolean }) {
+function Metric({ label, value, suffix }: { label: string; value: string; suffix?: string }) {
     return (
-        <div className="flex min-h-36 flex-col justify-between rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-            <div className="flex items-center justify-between text-zinc-400">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em]">{label}</p>
-                <StatIcon type={icon} />
-            </div>
+        <div className="flex min-h-32 flex-col justify-between border-b border-zinc-200 p-5 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+            <p className="text-lg font-semibold text-zinc-500">{label}</p>
             <div className="mt-7 flex items-baseline gap-2">
-                {status && <span className="size-2 rounded-full bg-[#137a68] " />}
                 <p className={`${value.length > 7 ? "text-2xl" : "text-4xl"} font-medium tracking-[-0.05em]`}>{value}</p>
-                {suffix && <span className="font-mono text-[10px] text-zinc-400">{suffix}</span>}
+                {suffix && <span className="font-mono text-[12px] text-zinc-600">{suffix}</span>}
             </div>
         </div>
     );

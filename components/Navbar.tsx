@@ -14,19 +14,12 @@ export function Navbar() {
                 </Link>
 
                 <div className="hidden items-center gap-1 lg:flex">
-                    {session?.user? (
+                    {session?.user && (
                         <Link
                             href="/"
                             className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
                         >
                             Dashboard
-                        </Link>
-                    ) : (
-                        <Link
-                            href="/"
-                            className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
-                        >
-                            Home
                         </Link>
                     )}
 

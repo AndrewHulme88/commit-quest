@@ -33,9 +33,9 @@ export function FollowingList() {
 
     if (followedUsers.length === 0) {
         return (
-            <section className="rounded-lg border border-zinc-200 bg-white p-6">
+            <section className="border-t border-zinc-200 py-6">
                 <h3 className="mb-3 text-xl font-bold">Following</h3>
-                <p className="rounded-lg border border-zinc-200 bg-zinc-50 p-6 text-zinc-500">
+                <p className="border-b border-zinc-200 py-8 text-zinc-500">
                     You are not following anyone yet. Follow other developers to see their progress and compete on the leaderboards!
                 </p>
             </section>
@@ -43,13 +43,13 @@ export function FollowingList() {
     }
 
     return (
-            <section className="rounded-lg border border-zinc-200 bg-white p-6">
+            <section>
                 <h3 className="mb-3 text-xl font-bold">Following</h3>
-                <div className="space-y-4">
+                <div className="border-t border-zinc-200">
                     {followedUsers.map((followedUser) => (
                         <div
                             key={followedUser.id}
-                            className="flex items-center justify-between rounded-lg border border-zinc-200 bg-zinc-50 p-5"
+                            className="flex flex-col gap-4 border-b border-zinc-200 py-5 sm:flex-row sm:items-center sm:justify-between"
                         >
                         <div className="flex items-center gap-4">
                             {followedUser.image && (

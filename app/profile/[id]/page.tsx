@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { FollowButton } from "@/components/FollowButton";
+import { AchievementIcon } from "@/components/AchievementIcon";
 
 type Achievement = {
     id: string;
@@ -52,7 +53,7 @@ export default function ProfilePage() {
             <Navbar />
             
             <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
-                <section className="rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
+                <section className="border-b border-zinc-200 pb-10">
                     <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-5">
                             {profile.image && (
@@ -87,19 +88,19 @@ export default function ProfilePage() {
                     </div>
                 </section>
 
-                <section className="mt-6 grid gap-6 md:grid-cols-4">
+                <section className="mt-8 grid border-y border-zinc-200 md:grid-cols-4">
                     <StatCard label="Level" value={profile.level} />
                     <StatCard label="Total XP" value={profile.xp} />
                     <StatCard label="Current Streak" value={`${profile.streak} days`} />
                     <StatCard label="Highest Streak" value={`${profile.highest_streak} days`} />
                 </section>
 
-                <section className="mt-6 grid gap-6 md:grid-cols-2">
+                <section className="grid border-b border-zinc-200 md:grid-cols-2">
                     <StatCard label="Followers" value={profile.followers_count} />
                     <StatCard label="Following" value={profile.following_count} />
                 </section>
 
-                <section className="mt-6 rounded-lg border border-zinc-200 bg-white p-6">
+                <section className="mt-12">
                     <h2 className="text-2xl font-bold">Achievements</h2>
 
                     {profile.achievements.length === 0 ? (
@@ -107,15 +108,17 @@ export default function ProfilePage() {
                             No achievements unlocked yet.
                         </p>
                     ) : (
-                        <div className="mt-4 grid gap-4 md:grid-cols-2">
+                        <div className="mt-4 grid border-t border-zinc-200 md:grid-cols-2">
                             {profile.achievements.map((achievement) => (
                                 <div
                                     key={achievement.id}
-                                    className="rounded-lg border border-zinc-200 bg-zinc-50 p-4"
+                                    className="flex gap-4 border-b border-zinc-200 p-4 md:odd:border-r"
                                 >
-                                    <p className="text-3xl">{achievement.icon}</p>
-                                    <p className="mt-2 font-bold">{achievement.name}</p>
-                                    <p className="text-sm text-zinc-500">{achievement.description}</p>
+                                    <span className="mt-0.5 text-[#137a68]"><AchievementIcon name={achievement.name} /></span>
+                                    <div>
+                                        <p className="font-medium">{achievement.name}</p>
+                                        <p className="mt-1 text-sm text-zinc-500">{achievement.description}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -137,7 +140,7 @@ function StatCard({
     value: string | number;
 }) {
     return (
-        <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="border-b border-zinc-200 p-6 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
             <p className="text-sm text-zinc-500">{label}</p>
             <p className="mt-2 text-3xl font-bold">{value}</p>
         </div>

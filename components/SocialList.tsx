@@ -18,14 +18,14 @@ export function SocialList() {
     const followedUsers: FollowedUser[] = [];
 
     return (
-        <section className="rounded-lg border border-zinc-200 bg-white p-6">
+        <section>
             <h2 className="mb-6 text-2xl font-bold">Following</h2>
 
-            <div className="space-y-4">
+            <div className="border-t border-zinc-200">
                 {followedUsers.map((user) => (
                     <div
                         key={user.id}
-                        className="flex items-center justify-between rounded-lg border border-zinc-300 p-4"
+                        className="flex items-center justify-between border-b border-zinc-200 py-5"
                     >
                         <div className="flex items-center gap-4">
                             <Image
